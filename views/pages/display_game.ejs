@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <!--
-This is the home page for Board Games for Families, Node.js version
+This is the recommendation page for Board Games for Families, Node.js version
 Author: Nikkala Thomson
 -->
+
+<p>The price for a <%= type %> weighing <%= weight %> ounces is: $<%= result %>.</p>
+
+{"name":"Azul","image_url":"https://cdn.pastemagazine.com/www/articles/azul%20boardgame%20main.jpg","properties":{"min_players":2,"max_players":4,"min_playtime":30,"max_playtime":45,"weight":1.8,"themes":["Art","Renaissance"],"mechanisms":["Drafting","Pattern_Building","Set_Collection","Tile_Placement"]}}
 
 <html lang="en-us">
 
 <head>
-    <title>Home | The Board Game Whisperer</title>
+    <title>Recommendation | The Board Game Whisperer</title>
     <link rel="stylesheet" type="text/css" href="styles/normalize.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="styles/main_style.css" />
     <meta charset="UTF-8">
@@ -20,7 +24,7 @@ Author: Nikkala Thomson
     <header>
         <div id="header-band"></div>
         <div id="header-text" class="center-block">
-            <h1>The Board Game Whisperer</h1>
+            <h1>Your Game Recommendation</h1>
         </div>
     </header>
     <div class=center-block>
@@ -30,7 +34,7 @@ Author: Nikkala Thomson
                 <li><a href="">Login</a></li>
                 <li><a href="">Register</a></li>
                 <li><a href="">Profile</a></li>
-                <li><a href="/getGame?boardgame=1">Get Games</a></li>
+                <li><a href="">Get Games</a></li>
             </ul>
         </nav>
         <main>
@@ -39,19 +43,12 @@ Author: Nikkala Thomson
                 <img src="images/familygame.jpg" alt="Family playing games">
             </figure>
             <div class="flex">
-                <section>
-                    <p>Playing board games with your family creates precious experiences and lasting memories. </p>
-                    <br>
-                    <p>Consider trying out a new board game today!</p>
-
-                </section>
-                <section>
-                    <ul>
-                        <li><a href="">New? Register today.</a></li>
-                        <li><a href="">Been here before? Login.</a></li>
-                        <li><a href="/getGame?boardgame=1">Get a game recommendation.</a></li>
-                        <li><a href="">Edit your user profile.</a></li>
-                    </ul>
+                <section class="wide-section">
+                    <p>The Board Game Whisperer thinks you would enjoy playing the game <%= name %>. </p><br>
+                    <img src="<%= image_url %>" alt="<%= name %>">';
+                    <form action="games.php" method="post">
+                        <button type="submit" name="submit" class="submit_btn">Get Another Game Recommendation</button>
+                    </form>
                 </section>
             </div>
 
@@ -63,10 +60,8 @@ Author: Nikkala Thomson
             <div class="center-block">
                 <ul>
                     <li>Copyright &copy; 2019</li>
-
                 </ul>
             </div>
-
         </footer>
     </div>
 </body>

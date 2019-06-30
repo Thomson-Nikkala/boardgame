@@ -5,7 +5,7 @@ const {
     Pool
 } = require("pg");
 
-const connection_string = process.env.DATABASE_URL
+const connection_string = process.env.DATABASE_URL;
 
 app.set("port", (process.env.PORT || 5000));
 

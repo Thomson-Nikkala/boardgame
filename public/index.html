@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--
+This is the home page for Board Games for Families, Node.js version
+Author: Nikkala Thomson
+-->
+
+<html lang="en-us">
+
+<head>
+    <title>Home | Board Games for Families</title>
+    <link rel="stylesheet" type="text/css" href="../styles/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../styles/main_style.css" />
+    <meta charset="UTF-8">
+    <meta name="author" content="Nikkala Thomson">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="pinterest" content="nopin">
+</head>
+
+<body>
+    <header>
+        <div id="header-band"></div>
+        <div id="header-text" class="center-block">
+            <h1>Board Games for Families</h1>
+        </div>
+    </header>
+    <div class=center-block>
+        <nav>
+            <ul>
+                <li id="active-nav"><a href=".">Home<img src="images/yellow-arrow.png" alt=""></a></li>
+                <li><a href="links.php">Links</a></li>
+                <li><a href="shopping/index.php">Shopping</a></li>
+                <li><a href="boardgames/index.php">Games</a></li>
+            </ul>
+        </nav>
+        <main>
+            <figure class=center-block>
+                <!--Main image -->
+                <img src="images/familygame.jpg" alt="Family playing games">
+            </figure>
+            <div class="flex">
+                <section>
+                    <p>Playing board games with your family creates precious experiences and lasting memories. </p>
+                    <br>
+                    <p>Consider trying out one of these board games today!</p>
+
+                </section>
+                <section>
+                    <ul>
+                        <li><a href="https://boardgamegeek.com/boardgame/148228/splendor" target="_blank">Splendor</a></li>
+                        <li><a href="https://boardgamegeek.com/boardgame/9209/ticket-ride" target="_blank">Ticket to Ride</a></li>
+                        <li><a href="https://boardgamegeek.com/boardgame/199561/sagrada" target="_blank">Sagrada</a></li>
+                        <li><a href="https://boardgamegeek.com/boardgame/230802/azul" target="_blank">Azul</a></li>
+                        <li><a href="https://boardgamegeek.com/boardgame/266192/wingspan" target="_blank">Wingspan</a></li>
+                    </ul>
+                </section>
+            </div>
+
+        </main>
+        <footer>
+            <div class="center-block">
+                <hr>
+            </div>
+            <div class="center-block">
+                <ul>
+                    <li>Copyright &copy; </li>
+                    <?php echo date("Y"); ?>
+                </ul>
+            </div>
+
+        </footer>
+    </div>
+</body>
+
+</html>

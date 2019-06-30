@@ -58,7 +58,7 @@ function get_game(req, res) {
             console.log("Back from the get_game_from_db with result:", result);
             const param = res.json(result[0]);
         }
-        response.render('pages/display_game', param);
+        res.render('pages/display_game', param);
     });
 
 }

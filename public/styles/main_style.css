@@ -70,7 +70,7 @@ input[type=email]:focus {
 
 body {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    background-image: url("images/diagmonds-blue.png");
+    background-image: url("../images/diagmonds-blue.png");
     color: #ffffff;
     min-width: 1080px;
     margin: auto;

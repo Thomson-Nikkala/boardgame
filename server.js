@@ -22,7 +22,7 @@ app.listen(app.get("port"), function () {
 function get_game(req, res) {
     var game = req.query.boardgame;
     get_game_from_db(game, function (error, result) {
-        if (error || result == null || result.length != 1) {
+        if (error || result == null) {
             res.status(500).json({
                 success: false,
                 data: error

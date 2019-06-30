@@ -4,6 +4,7 @@
     "description": "The Board Game Whisperer using Node.js",
     "main": "server.js",
     "dependencies": {
+        "ejs": "^2.6.2",
         "express": "^4.17.1",
         "pg": "^7.11.0"
     },

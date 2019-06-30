@@ -25,7 +25,7 @@ const pool = new Pool({
 app.set('port', (process.env.PORT || 5000));
 
 // create web service endpoint for get game request
-app.get'/getGame', get_game)
+app.get('/getGame', get_game);
 
 app.listen(app.get('port'), function () {
     console.log('Now listening for connections on port: ', app.get('port'));

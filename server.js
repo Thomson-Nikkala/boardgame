@@ -56,7 +56,7 @@ function get_game(req, res) {
             })
         } else {
             console.log("Back from the get_game_from_db with result:", result);
-            const params = JSON.stringify(result[0]);
+            const params = result[0];
             res.render('pages/display_game', params);
         }
     });

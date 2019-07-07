@@ -115,7 +115,7 @@ function register(params, res, callback) {
     var password = params.password;
     var password2 = params.r_password;
 
-    var sql = "INSERT INTO gamer (username, display_name, email, hashed_password) VALUES ($1, $2, $3, $4);');";
+    var sql = "INSERT INTO gamer (username, display_name, email, hashed_password) VALUES ($1, $2, $3, $4);";
 
     pool.query(sql, [username, display_name, email, password], function (err, result) {
 

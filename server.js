@@ -104,7 +104,7 @@ function get_game_from_db(game, callback) {
     })
 }
 
-function go_register(res) {
+function go_register(req, res) {
     res.render('pages/register.ejs');
 }
 

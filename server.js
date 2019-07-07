@@ -112,8 +112,8 @@ function register(params, res, callback) {
     var username = params.username;
     var display_name = params.r_display_name;
     var email = params.r_email;
-    var password = params.password;
-    var password2 = params.r_password;
+    var password = params.r_password;
+    var password2 = params.r_password2;
     console.log(password);
 
     var sql = "INSERT INTO gamer (username, display_name, email, hashed_password) VALUES ($1, $2, $3, $4);";

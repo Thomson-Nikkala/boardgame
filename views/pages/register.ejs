@@ -28,7 +28,7 @@ Author: Nikkala Thomson
     <div class=center-block>
         <nav>
             <ul>
-                <li><a href="">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li><a href="">Login</a></li>
                 <li id="active-nav"><a href="/register">Register<img src="../images/yellow-arrow.png" alt=""></a></li>
                 <li><a href="">Profile</a></li>
@@ -37,7 +37,7 @@ Author: Nikkala Thomson
         </nav>
         <main>
             <section class="wide-section">
-                <form id="myForm" action="submitRegistration" method="post">
+                <form id="myForm" action="register" method="post">
                     <br>
                     <label for="username" class="label_long"><b>Username</b></label>
                     <input id="field_username" type="text" title="Username must not be blank and contain only letters, numbers and underscores." placeholder="Enter Username" name="username" onBlur="checkAvailability()" required pattern="\w+" /><span id="user-availability-status"></span>

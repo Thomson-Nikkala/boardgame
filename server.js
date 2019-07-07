@@ -29,12 +29,6 @@ const pool = new Pool({
     connectionString: connection_string
 });
 
-// the pool will emit an error on behalf of any idle clients it contains if a backend error or network partition happens
-Pool.on('error', (err, client) => {
-    console.error('Unexpected error on idle client', err)
-    process.exit(-1)
-})
-
 app.set('port', (process.env.PORT || 5000));
 
 // home

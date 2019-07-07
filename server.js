@@ -1,6 +1,7 @@
 var express = require('express');
 const path = require('path');
 var app = express();
+var body_parser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 
 // tell it to use the public directory as one where static files live
@@ -13,9 +14,23 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 app.engine('html', require('ejs').renderFile);
 
+// use body parser to easy fetch post body
+app.use(body_parser.urlencoded({
+    extended: false
+}));
+app.use(body_parser.json())
+
 const {
     Pool
 } = require('pg');
+
+// the pool with emit an error on behalf of any idle clients
+// it contains if a backend error or network partition happens
+Pool.on('error', (err, client) => {
+    console.error('Unexpected error on idle client', err)
+    process.exit(-1)
+})
+
 
 const connection_string = process.env.DATABASE_URL;
 const pool = new Pool({
@@ -24,11 +39,24 @@ const pool = new Pool({
 
 app.set('port', (process.env.PORT || 5000));
 
+// home
+app.get('/', function (req, res, next) {
+    res.sendfile('index.html');
+});
+
 // create web service endpoint for get game request
 app.get('/getGame', get_game);
 
 // create page for registration
 app.get('/register', register);
+
+// process form for registration
+app.post('/register', function (req, res, next) {
+    register(req.body, res);
+});
+
+//  login
+
 
 app.listen(app.get('port'), function () {
     console.log('Now listening for connections on port: ', app.get('port'));
@@ -84,6 +112,30 @@ function get_game_from_db(game, callback) {
     })
 }
 
-function register() {
 
+function register(params, res, callback) {
+    //  var username = params.username;
+    //  var display_name = params.r_display_name;
+    //  var email = params.r_email;
+    //  var password = params.password;
+    //  var password2 = params.r_password;
+
+    var sql = "INSERT INTO gamer (username, display_name, email, hashed_password) VALUES ($1, $2, $3, $4);');";
+
+    pool.query(sql, params, function (err, result)) {
+
+        if (err) {
+            console.log("An error with the DB occurred");
+            console.log(err);
+            callback(err, null);
+        }
+
+        console.log("Row inserted?");
+
+        callback(null);
+
+    }
+
+
+    res.redirect('/');
 }

@@ -83,3 +83,7 @@ function get_game_from_db(game, callback) {
         callback(null, result.rows);
     })
 }
+
+function register() {
+
+}

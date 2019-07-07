@@ -122,7 +122,7 @@ function register(params, res, callback) {
 
     var sql = "INSERT INTO gamer (username, display_name, email, hashed_password) VALUES ($1, $2, $3, $4);');";
 
-    pool.query(sql, params, function (err, result)) {
+    pool.query(sql, params, function (err, result) {
 
         if (err) {
             console.log("An error with the DB occurred");
@@ -134,7 +134,7 @@ function register(params, res, callback) {
 
         callback(null);
 
-    }
+    })
 
 
     res.redirect('/');

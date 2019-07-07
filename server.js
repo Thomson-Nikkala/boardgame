@@ -109,15 +109,15 @@ function go_register(req, res) {
 }
 
 function register(params, res, callback) {
-    //  var username = params.username;
-    //  var display_name = params.r_display_name;
-    //  var email = params.r_email;
-    //  var password = params.password;
-    //  var password2 = params.r_password;
+    var username = params.username;
+    var display_name = params.r_display_name;
+    var email = params.r_email;
+    var password = params.password;
+    var password2 = params.r_password;
 
     var sql = "INSERT INTO gamer (username, display_name, email, hashed_password) VALUES ($1, $2, $3, $4);');";
 
-    pool.query(sql, params, function (err, result) {
+    pool.query(sql, [username, display_name, email, password], function (err, result) {
 
         if (err) {
             console.log("An error with the DB occurred in register");

@@ -39,8 +39,8 @@ app.get('/', function (req, res, next) {
 // create web service endpoint for get game request
 app.get('/getGame', get_game);
 
-// create page for registration
-app.get('/register', register);
+// go to page for registration
+app.get('/register', go_register);
 
 // process form for registration
 app.post('/register', function (req, res, next) {
@@ -93,7 +93,7 @@ function get_game_from_db(game, callback) {
 
     pool.query(sql, params, function (err, result) {
         if (err) {
-            console.log("An error with the DB occurred");
+            console.log("An error with the DB occurred in get_game_from_db.");
             console.log(err);
             callback(err, null);
         }
@@ -104,6 +104,9 @@ function get_game_from_db(game, callback) {
     })
 }
 
+function go_register() {
+    res.render('pages/register.ejs');
+}
 
 function register(params, res, callback) {
     //  var username = params.username;
@@ -117,7 +120,7 @@ function register(params, res, callback) {
     pool.query(sql, params, function (err, result) {
 
         if (err) {
-            console.log("An error with the DB occurred");
+            console.log("An error with the DB occurred in register");
             console.log(err);
             callback(err, null);
         }

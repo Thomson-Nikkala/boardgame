@@ -114,7 +114,6 @@ function register(params, res, callback) {
     var email = params.r_email;
     var password = params.r_password;
     var password2 = params.r_password2;
-    console.log(password);
 
     var sql = "INSERT INTO gamer (username, display_name, email, hashed_password) VALUES ($1, $2, $3, $4);";
 
@@ -126,7 +125,7 @@ function register(params, res, callback) {
             callback(err, null);
         }
 
-        console.log("Row inserted?");
+        console.log("Row inserted.");
 
     })
 

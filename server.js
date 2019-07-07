@@ -114,10 +114,11 @@ function register(params, res, callback) {
     var email = params.r_email;
     var password = params.password;
     var password2 = params.r_password;
+    console.log(password);
 
     var sql = "INSERT INTO gamer (username, display_name, email, hashed_password) VALUES ($1, $2, $3, $4);";
 
-    pool.query(sql, [username, display_name, email, password], function (err, result) {
+    pool.query(sql, [username, display_name, email, password], function callback(err, result) {
 
         if (err) {
             console.log("An error with the DB occurred in register");
@@ -126,8 +127,6 @@ function register(params, res, callback) {
         }
 
         console.log("Row inserted?");
-
-        callback(null);
 
     })
 

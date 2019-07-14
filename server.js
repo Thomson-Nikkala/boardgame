@@ -226,6 +226,6 @@ function get_gamer_id(username, callback) {
                 console.log(err);
                 callback(err, null);
             }
-            callback(null, result.rows[0]);
+            callback(null, result.rows);
         })
 }

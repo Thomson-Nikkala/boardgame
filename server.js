@@ -209,7 +209,7 @@ function use_prefs_to_get_game(game, callback) {
     res.render('pages/games.ejs');
 }
 
-function get_gamer_id(username, callback) {
+function get_gamer_id(username) {
     var sql = "SELECT gamer FROM gamer WHERE username = $1";
     var params = [username];
 
@@ -221,4 +221,5 @@ function get_gamer_id(username, callback) {
         }
         callback(null, result.rows[0]);
     })
+    return result.rows[0];
 }

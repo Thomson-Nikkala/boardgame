@@ -46,6 +46,10 @@ app.get('/getGame', get_game);
 // go to page for registration
 app.get('/register', go_register);
 
+
+// go to page for game preferences
+app.get('/games', go_preferences);
+
 // process form for registration
 app.post('/register', function (req, res, next) {
     register(req.body, res);
@@ -240,4 +244,8 @@ function go_login(req, res) {
 
 function edit_profile(req, res) {
     res.render('pages/edit_profile.ejs');
+}
+
+function go_preferences(req, res) {
+    res.render('pages/games.ejs');
 }

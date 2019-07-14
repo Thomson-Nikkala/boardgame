@@ -7,9 +7,16 @@ Author: Nikkala Thomson
 <html lang="en-us">
 
 <head>
-    <?php $ROOT = '../';
-    include '../modules/head.php'; ?>
-    <title>The Board Game Whisperer</title>
+    <link rel="stylesheet" type="text/css" href="styles/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/main_style.css" />
+    <meta charset="UTF-8">
+    <meta name="author" content="Nikkala Thomson">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="pinterest" content="nopin">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="login.js"></script>
+
+    <title>The Board Game Whisperer | Login</title>
 </head>
 
 <body>
@@ -22,39 +29,34 @@ Author: Nikkala Thomson
     <div class=center-block>
         <nav>
             <ul>
-                <li><a href="index.php">Home</a></li>
-                <li id="active-nav"><a href="login.php">Login<img src="../images/yellow-arrow.png" alt=""></a></li>
-                <li><a href="register.php">Register</a></li>
-                <li><a href="edit_profile.php">Profile</a></li>
-                <li><a href="games.php">Get Games</a></li>
+                <li><a href="/">Home</a></li>
+                <li id="active-nav"><a href="/login">Login<img src="../images/yellow-arrow.png" alt=""></a></li>
+                <li><a href="/register">Register</a></li>
+                <li><a href="/edit_profile">Profile</a></li>
+                <li><a href="/games">Get Games</a></li>
             </ul>
         </nav>
         <main>
 
 
             <section class="wide-section">
-                <br>
-                <p> You are logged in as <?php
-                    $gamer = $_SESSION['gamer'];
-                    $query = "SELECT display_name FROM gamer g WHERE g.gamer = $gamer";
-                    $statement = $db->prepare($query);
-                    $statement->execute();   
-                    $gamer_data = $statement->fetch(PDO::FETCH_ASSOC);
-                    echo $gamer_data['display_name'];
-                ?>. Log in as a different user below.</p><br>
-                <?php echo $_SESSION['error']; 
-                $_SESSION['error'] = ''; ?>
-                <form action="action_page.php" method="post">
-                    <label for="username" class="label_long"><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username" name="l_username" required /><br>
-                    <label for="password" class="label_long"><b>Password</b></label>
-                    <input type="password" placeholder="Enter Password" name="l_password" required /><br>
-                    <button type="submit" class="submit_btn">LOGIN</button>
-                </form>
+
+                <label for="username" class="label_long"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" id="username" required /><br>
+                <label for="password" class="label_long"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" id="password" required /><br>
+                <button onclick="login();">LOGIN</button>
             </section>
         </main>
         <footer>
-            <?php include("../modules/footer.php"); ?>
+            <div class="center-block">
+                <hr>
+            </div>
+            <div class="center-block">
+                <ul>
+                    <li>Copyright &copy; 2019 </li>
+                </ul>
+            </div>
         </footer>
     </div>
 </body>

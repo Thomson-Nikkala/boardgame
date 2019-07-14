@@ -152,7 +152,7 @@ function register(params, res, callback) {
         })
     });
     // get gamer's gamer id number
-    var gamer_id = function (req, res, next) {
+    var gamer_id = function (req, res) {
         get_gamer_id(username, function (err, rows) {
             if (err)
                 return next(err);

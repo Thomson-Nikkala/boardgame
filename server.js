@@ -187,7 +187,7 @@ function game_prefs(req, res) {
 
 function use_prefs_to_get_game(game, callback) {
 
-    // change all this
+    /* change all this
     var sql = "SELECT name, image_url, properties FROM board_game WHERE board_game = $1::int";
     var params = [game];
 
@@ -203,13 +203,10 @@ function use_prefs_to_get_game(game, callback) {
         callback(null, result.rows);
     })
 
-
-    get_game();
-
-    res.render('pages/games.ejs');
+    res.render('pages/games.ejs'); */
 }
 
-function get_gamer_id(username) {
+function get_gamer_id(username, callback) {
     var sql = "SELECT gamer FROM gamer WHERE username = $1";
     var params = [username];
 
@@ -221,5 +218,4 @@ function get_gamer_id(username) {
         }
         callback(null, result.rows[0]);
     })
-    return result.rows[0];
 }

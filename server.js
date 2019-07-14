@@ -109,7 +109,7 @@ function go_register(req, res) {
     res.render('pages/register.ejs');
 }
 
-function register(params, res, callback(err, hash)) {
+function register(params, res, callback) {
     var username = params.username;
     var display_name = params.r_display_name;
     var email = params.r_email;

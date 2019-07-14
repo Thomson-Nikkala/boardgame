@@ -54,6 +54,9 @@ app.post('/register', function (req, res, next) {
 //  login
 app.get('/login', go_login);
 
+// edit profile
+app.get('/profile', edit_profile);
+
 
 app.listen(app.get('port'), function () {
     console.log('Now listening for connections on port: ', app.get('port'));
@@ -233,4 +236,8 @@ function get_gamer_id(username, callback) {
 
 function go_login(req, res) {
     res.render('pages/login.ejs');
+}
+
+function edit_profile(req, res) {
+    res.render('pages/edit_profile.ejs');
 }

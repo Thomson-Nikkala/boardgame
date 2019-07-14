@@ -37,6 +37,9 @@ app.get('/', function (req, res, next) {
     res.sendfile('index.html');
 });
 
+// create web service endpoint for game preferences
+app.get('/gamePrefs', game_prefs);
+
 // create web service endpoint for get game request
 app.get('/getGame', get_game);
 
@@ -65,6 +68,28 @@ app.use(function (err, req, res, next) {
 app.use(function (req, res, next) {
     res.status(404).send("Sorry can't find that!")
 })
+
+app.get('/usercheck', function (req, res) {
+    User.findOne({
+        username: req.query.username
+    }, function (err, user) {
+        if (err) {
+            console.log(err);
+        }
+        var message;
+        if (user) {
+            console.log(user)
+            message = "user exists";
+            console.log(message)
+        } else {
+            message = "user doesn't exist";
+            console.log(message)
+        }
+        res.json({
+            message: message
+        });
+    });
+});
 
 /******************************
 Functions (should put in separate file later)
@@ -115,19 +140,76 @@ function register(params, res, callback) {
     var email = params.r_email;
     var password = params.r_password;
     const salt_rounds = 12;
-
+    //  create gamer
     bcrypt.hash(password, salt_rounds, function (err, hash) {
         var sql = "INSERT INTO gamer (username, display_name, email, hashed_password) VALUES ($1, $2, $3, $4);";
         pool.query(sql, [username, display_name, email, hash], function callback(err, result) {
             if (err) {
-                console.log("An error with the DB occurred in register");
+                console.log("An error with the DB occurred in register.");
                 console.log(err);
                 callback(err, null);
             }
-            console.log(hash);
         })
     });
+    // get gamer's gamer id number
+    var sql2 = "SELECT currval('gamer_id_seq');"
+    gamer_id = pool.query(sql2, [], function callback(err, result) {
+            if (err) {
+                console.log("An error with the DB occurred in get gamer id.");
+                console.log(err);
+                callback(err, null);
+            }
+        }
+        default_prefs = '{"min_players":2, "max_players":4, "min_playtime":30, "max_playtime":120, "min_weight":1.5, "max_weight":2.5, "themes":[], "mechanisms":[]}';
+        // create default game preferences for gamer
+        var sql3 = "INSERT INTO preference(gamer, preferences) VALUES ($1, $2)"; pool.query(sql3, [gamer_id, default_prefs], function callback(err, result) {
+            if (err) {
+                console.log("An error with the DB occurred in default prefs.");
+                console.log(err);
+                callback(err, null);
+            }
+        })
+
+        res.redirect('/'); // gamePrefs later
+    }
+
+    function game_prefs(req, res) {
+
+        var game = req.query.boardgame;
+        get_game_from_db(game, function (error, result) {
+            if (error || result == null) {
+                res.status(500).json({
+                    success: false,
+                    data: error
+                })
+            } else {
+                console.log("Back from the get_game_from_db with result:", result);
+                const params = result[0];
+                res.render('pages/display_game', params);
+            }
+        });
+
+    }
+
+    function use_prefs_to_get_game(game, callback) {
+
+        var sql = "SELECT name, image_url, properties FROM board_game WHERE board_game = $1::int";
+        var params = [game];
+
+        pool.query(sql, params, function (err, result) {
+            if (err) {
+                console.log("An error with the DB occurred in get_game_from_db.");
+                console.log(err);
+                callback(err, null);
+            }
+
+            console.log("Found DB result: " + JSON.stringify(result.rows));
+
+            callback(null, result.rows);
+        })
 
 
-    res.redirect('/');
-}
+        get_game();
+
+        res.render('pages/games.ejs');
+    }

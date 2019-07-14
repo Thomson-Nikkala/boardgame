@@ -1,18 +1,3 @@
-<?php
-// Start the session
-session_start();
-// Initialize session variables
-if (!isset($_SESSION['gamer'])){
-$_SESSION['gamer'] = 1;}
-// Get the Heroku database
-require_once "db_connect.php";
-$db = get_db();
-// Force display of all errors (for debugging)
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-?>
-
 <!DOCTYPE html>
 <!--
 This is the Games page for The Board Game Whisperer
@@ -22,9 +7,15 @@ Author: Nikkala Thomson
 <html lang="en-us">
 
 <head>
-    <?php $ROOT = '../';
-    include '../modules/head.php'; ?>
-    <title>The Board Game Whisperer</title>
+     <link rel="stylesheet" type="text/css" href="styles/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/main_style.css" />
+    <meta charset="UTF-8">
+    <meta name="author" content="Nikkala Thomson">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="pinterest" content="nopin">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../models/register.js"></script>
+    <title>The Board Game Whisperer | Game Preferences</title>
 </head>
 
 <body>
@@ -85,20 +76,19 @@ Author: Nikkala Thomson
                     <input id="go" name="go" type="hidden" value="Preferences Submitted"><br>
                     <p>Minimum number of players: <select name="min_players">
                             <?php foreach( $min_players as $min_player ): ?>
-                            <option value="<?php echo $min_player ?>" <?php if( $min_player == ($player_prefs_json->min_players) ): ?> selected="selected" <?php endif; ?>><?php echo $min_player ?></option>
-                            <?php endforeach; ?>
+                            <option value="<?php echo $min_player ?>"
                         </select></p>
 
                     <p>Maximum number of players: <select name="max_players">
                             <?php foreach( $max_players as $max_player ): ?>
-                            <option value="<?php echo $max_player ?>" <?php if( $max_player == ($player_prefs_json->max_players) ): ?> selected="selected" <?php endif; ?>><?php echo $max_player ?></option>
+                            <option value="<?php echo $max_player ?>" </option>
                             <?php endforeach; ?>
                         </select></p>
 
                     <p>Minimum playing time (in minutes): <select name="min_playtime">
                             <?php foreach( $min_playtimes as $min_playtime ): ?>
-                            <option value="<?php echo $min_playtime ?>" <?php if( $min_playtime == ($player_prefs_json->min_playtime) ): ?> selected="selected" <?php endif; ?>><?php echo $min_playtime ?></option>
-                            <?php endforeach; ?>
+                            <option value="<?php echo $min_playtime ?>" </option>
+                    
                         </select></p>
 
                     <p>Maximum playing time (in minutes): <select name="max_playtime">
@@ -136,7 +126,15 @@ Author: Nikkala Thomson
             </section>
         </main>
         <footer>
-            <?php include("../modules/footer.php"); ?>
+          <div class="center-block">
+                <hr>
+            </div>
+            <div class="center-block">
+                <ul>
+                    <li>Copyright &copy; 2019 </li>
+                </ul>
+            </div>
+
         </footer>
     </div>
 </body>

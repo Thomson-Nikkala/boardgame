@@ -52,6 +52,7 @@ app.post('/register', function (req, res, next) {
 });
 
 //  login
+app.get('/login', go_login);
 
 
 app.listen(app.get('port'), function () {
@@ -228,4 +229,8 @@ function get_gamer_id(username, callback) {
         }
         callback(null, result.rows);
     })
+}
+
+function go_login(req, res) {
+    res.render('pages/login.ejs');
 }

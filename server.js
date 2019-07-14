@@ -152,14 +152,7 @@ function register(params, res, callback) {
         })
     });
     // get gamer's gamer id number
-    var sql2 = "SELECT currval('gamer_id_seq');"
-    gamer_id = pool.query(sql2, [], function callback(err, result) {
-        if (err) {
-            console.log("An error with the DB occurred in get gamer id.");
-            console.log(err);
-            callback(err, null);
-        }
-    })
+    var gamer_id = get_gamer_id(username);
     default_prefs = '{"min_players":2, "max_players":4, "min_playtime":30, "max_playtime":120, "min_weight":1.5, "max_weight":2.5, "themes":[], "mechanisms":[]}';
     // create default game preferences for gamer
     var sql3 = "INSERT INTO preference(gamer, preferences) VALUES ($1, $2)";
@@ -194,6 +187,7 @@ function game_prefs(req, res) {
 
 function use_prefs_to_get_game(game, callback) {
 
+    // change all this
     var sql = "SELECT name, image_url, properties FROM board_game WHERE board_game = $1::int";
     var params = [game];
 
@@ -213,4 +207,18 @@ function use_prefs_to_get_game(game, callback) {
     get_game();
 
     res.render('pages/games.ejs');
+}
+
+function get_gamer_id(username, callback) {
+    var sql = "SELECT gamer FROM gamer WHERE username = $1";
+    var params = [username];
+
+    pool.query(sql, params, function (err, result) {
+        if (err) {
+            console.log("An error with the DB occurred in get_gamer_id.");
+            console.log(err);
+            callback(err, null);
+        }
+        callback(null, result.rows[0]);
+    })
 }

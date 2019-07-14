@@ -153,6 +153,7 @@ function register(params, res, callback) {
     });
     // get gamer's gamer id number
     var gamer_id = 0;
+    console.log('HERE');
     gamer_id = function (req, res) {
         get_gamer_id(username, function (err, rows) {
             if (err)
@@ -219,13 +220,12 @@ function use_prefs_to_get_game(game, callback) {
 function get_gamer_id(username, callback) {
     var sql = "SELECT gamer FROM gamer WHERE username = $1";
     var params = [username];
-    var gamer_id =
-        pool.query(sql, params, function (err, result) {
-            if (err) {
-                console.log("An error with the DB occurred in get_gamer_id.");
-                console.log(err);
-                callback(err, null);
-            }
-            callback(null, result.rows);
-        })
+    pool.query(sql, params, function (err, result) {
+        if (err) {
+            console.log("An error with the DB occurred in get_gamer_id.");
+            console.log(err);
+            callback(err, null);
+        }
+        callback(null, result.rows);
+    })
 }

@@ -152,16 +152,17 @@ function register(params, res, callback) {
         })
     });
     // get gamer's gamer id number
-    var gamer_id = function (req, res) {
+    var gamer_id = 0;
+    gamer_id = function (req, res) {
         get_gamer_id(username, function (err, rows) {
             if (err)
                 return next(err);
             console.log(rows);
-            res.send(rows);
+            res.send(rows[0]);
         });
     };
 
-    console.log(gamer_id);
+    console.log('Gamer id', gamer_id);
     default_prefs = '{"min_players":2, "max_players":4, "min_playtime":30, "max_playtime":120, "min_weight":1.5, "max_weight":2.5, "themes":[], "mechanisms":[]}';
     // create default game preferences for gamer
     var sql3 = "INSERT INTO preference(gamer, preferences) VALUES ($1, $2)";

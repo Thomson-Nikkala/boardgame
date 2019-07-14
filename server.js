@@ -152,14 +152,14 @@ function register(params, res, callback) {
         })
     });
     // get gamer's gamer id number
-    var gamer_id = 0;
     console.log('HERE');
-    gamer_id = function (req, res) {
+    var gamer_id = function (req, res) {
         get_gamer_id(username, function (err, rows) {
             if (err)
                 return next(err);
             console.log(rows);
-            res.send(rows[0]);
+            res.json(rows);
+            res.send(rows[0].gamer);
         });
     };
 

@@ -153,27 +153,27 @@ function register(params, res, callback) {
     });
     // get gamer's gamer id number
     var gamer_id = function (req, res, next) {
-        get_gamer_id(username, function (err, rows)) {
+        get_gamer_id(username, function (err, rows) {
             if (err)
                 return next(err);
             console.log(rows);
             res.send(rows);
         });
-};
+    };
 
-console.log(gamer_id);
-default_prefs = '{"min_players":2, "max_players":4, "min_playtime":30, "max_playtime":120, "min_weight":1.5, "max_weight":2.5, "themes":[], "mechanisms":[]}';
-// create default game preferences for gamer
-var sql3 = "INSERT INTO preference(gamer, preferences) VALUES ($1, $2)";
-pool.query(sql3, [gamer_id, default_prefs], function callback(err, result) {
-    if (err) {
-        console.log("An error with the DB occurred in default prefs.");
-        console.log(err);
-        callback(err, null);
-    }
-})
+    console.log(gamer_id);
+    default_prefs = '{"min_players":2, "max_players":4, "min_playtime":30, "max_playtime":120, "min_weight":1.5, "max_weight":2.5, "themes":[], "mechanisms":[]}';
+    // create default game preferences for gamer
+    var sql3 = "INSERT INTO preference(gamer, preferences) VALUES ($1, $2)";
+    pool.query(sql3, [gamer_id, default_prefs], function callback(err, result) {
+        if (err) {
+            console.log("An error with the DB occurred in default prefs.");
+            console.log(err);
+            callback(err, null);
+        }
+    })
 
-res.redirect('/'); // gamePrefs later
+    res.redirect('/'); // gamePrefs later
 }
 
 function game_prefs(req, res) {

@@ -7,11 +7,13 @@ Author: Nikkala Thomson
 <html lang="en-us">
 
 <head>
-    <?php $ROOT = '../';
-    include '../modules/head.php'; ?>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="js/register.js"></script>
     <title>The Board Game Whisperer | Edit Profile</title>
+    <link rel="stylesheet" type="text/css" href="styles/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/main_style.css" />
+    <meta charset="UTF-8">
+    <meta name="author" content="Nikkala Thomson">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="pinterest" content="nopin">
 </head>
 
 <body>
@@ -33,32 +35,18 @@ Author: Nikkala Thomson
         </nav>
         <main>
             <section class="wide-section">
-                <?php
-                    $query = 'SELECT * FROM gamer g WHERE g.gamer = ' . $_SESSION["gamer"];
-                    $statement = $db->prepare($query);
-                    $statement->execute();   
-                    $gamer_data = $statement->fetch(PDO::FETCH_ASSOC);
-                    // sanitize here for safe display
-                    $display_name_safe = htmlspecialchars($gamer_data['display_name']);
-                    $email_safe = htmlspecialchars($gamer_data['email']);
-                
+
                 // Redirect to login page if logged in as Guest
-                   if ($gamer_data['gamer']==1) {
-                    header("Location: login.php");
-                    exit();
-                   }
-                ?>
+
                 <br>
                 <p>Here you may edit your user profile. Username cannot be changed.</p>
                 <br>
 
-                <form id="myForm" action="action_page.php" method="post">
+                <form id="myForm" action="/profile" method="post">
                     <label for="display_name" class="label_long"><b>Display Name</b></label>
-                    <input type="text" name="p_display_name" value="<?php echo $display_name_safe;  ?>" required /><br>
+                    <input type="text" name="p_display_name" value="" required /><br>
                     <label for="email" class="label_long"><b>Email</b></label>
-                    <input type="email" name="p_email" value="<?php echo $email_safe;  ?>" required /><br>
-                    <?php echo $_SESSION['error']; 
-                $_SESSION['error'] = ''; ?>
+                    <input type="email" name="p_email" value="" required /><br>
                     <label for="old_password" class="label_long"><b>Old Password</b></label>
                     <input type="password" placeholder="Enter Old Password" name="p_old_password" required /><br>
                     <label for="new_password" class="label_long"><b>Old or New Password</b></label>
@@ -72,7 +60,14 @@ Author: Nikkala Thomson
 
         </main>
         <footer>
-            <?php include("../modules/footer.php"); ?>
+            <div class="center-block">
+                <hr>
+            </div>
+            <div class="center-block">
+                <ul>
+                    <li>Copyright &copy; 2019 </li>
+                </ul>
+            </div>
         </footer>
     </div>
 </body>

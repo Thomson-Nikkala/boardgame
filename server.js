@@ -154,62 +154,63 @@ function register(params, res, callback) {
     // get gamer's gamer id number
     var sql2 = "SELECT currval('gamer_id_seq');"
     gamer_id = pool.query(sql2, [], function callback(err, result) {
-            if (err) {
-                console.log("An error with the DB occurred in get gamer id.");
-                console.log(err);
-                callback(err, null);
-            }
+        if (err) {
+            console.log("An error with the DB occurred in get gamer id.");
+            console.log(err);
+            callback(err, null);
         }
-        default_prefs = '{"min_players":2, "max_players":4, "min_playtime":30, "max_playtime":120, "min_weight":1.5, "max_weight":2.5, "themes":[], "mechanisms":[]}';
-        // create default game preferences for gamer
-        var sql3 = "INSERT INTO preference(gamer, preferences) VALUES ($1, $2)"; pool.query(sql3, [gamer_id, default_prefs], function callback(err, result) {
-            if (err) {
-                console.log("An error with the DB occurred in default prefs.");
-                console.log(err);
-                callback(err, null);
-            }
-        })
+    })
+    default_prefs = '{"min_players":2, "max_players":4, "min_playtime":30, "max_playtime":120, "min_weight":1.5, "max_weight":2.5, "themes":[], "mechanisms":[]}';
+    // create default game preferences for gamer
+    var sql3 = "INSERT INTO preference(gamer, preferences) VALUES ($1, $2)";
+    pool.query(sql3, [gamer_id, default_prefs], function callback(err, result) {
+        if (err) {
+            console.log("An error with the DB occurred in default prefs.");
+            console.log(err);
+            callback(err, null);
+        }
+    })
 
-        res.redirect('/'); // gamePrefs later
-    }
+    res.redirect('/'); // gamePrefs later
+}
 
-    function game_prefs(req, res) {
+function game_prefs(req, res) {
 
-        var game = req.query.boardgame;
-        get_game_from_db(game, function (error, result) {
-            if (error || result == null) {
-                res.status(500).json({
-                    success: false,
-                    data: error
-                })
-            } else {
-                console.log("Back from the get_game_from_db with result:", result);
-                const params = result[0];
-                res.render('pages/display_game', params);
-            }
-        });
+    var game = req.query.boardgame;
+    get_game_from_db(game, function (error, result) {
+        if (error || result == null) {
+            res.status(500).json({
+                success: false,
+                data: error
+            })
+        } else {
+            console.log("Back from the get_game_from_db with result:", result);
+            const params = result[0];
+            res.render('pages/display_game', params);
+        }
+    });
 
-    }
+}
 
-    function use_prefs_to_get_game(game, callback) {
+function use_prefs_to_get_game(game, callback) {
 
-        var sql = "SELECT name, image_url, properties FROM board_game WHERE board_game = $1::int";
-        var params = [game];
+    var sql = "SELECT name, image_url, properties FROM board_game WHERE board_game = $1::int";
+    var params = [game];
 
-        pool.query(sql, params, function (err, result) {
-            if (err) {
-                console.log("An error with the DB occurred in get_game_from_db.");
-                console.log(err);
-                callback(err, null);
-            }
+    pool.query(sql, params, function (err, result) {
+        if (err) {
+            console.log("An error with the DB occurred in get_game_from_db.");
+            console.log(err);
+            callback(err, null);
+        }
 
-            console.log("Found DB result: " + JSON.stringify(result.rows));
+        console.log("Found DB result: " + JSON.stringify(result.rows));
 
-            callback(null, result.rows);
-        })
+        callback(null, result.rows);
+    })
 
 
-        get_game();
+    get_game();
 
-        res.render('pages/games.ejs');
-    }
+    res.render('pages/games.ejs');
+}

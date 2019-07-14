@@ -2,6 +2,7 @@ var express = require('express');
 const path = require('path');
 var app = express();
 var body_parser = require('body-parser');
+const bcrypt = require('bcrypt');
 const PORT = process.env.PORT || 3000;
 
 // tell it to use the public directory as one where static files live
@@ -108,26 +109,24 @@ function go_register(req, res) {
     res.render('pages/register.ejs');
 }
 
-function register(params, res, callback) {
+function register(params, res, callback(err, hash)) {
     var username = params.username;
     var display_name = params.r_display_name;
     var email = params.r_email;
     var password = params.r_password;
-    var password2 = params.r_password2;
+    const salt_rounds = 12;
 
-    var sql = "INSERT INTO gamer (username, display_name, email, hashed_password) VALUES ($1, $2, $3, $4);";
-
-    pool.query(sql, [username, display_name, email, password], function callback(err, result) {
-
-        if (err) {
-            console.log("An error with the DB occurred in register");
-            console.log(err);
-            callback(err, null);
-        }
-
-        console.log("Row inserted.");
-
-    })
+    bcrypt.hash(password, salt_rounds, function (err, hash) {
+        var sql = "INSERT INTO gamer (username, display_name, email, hashed_password) VALUES ($1, $2, $3, $4);";
+        pool.query(sql, [username, display_name, email, hash], function callback(err, result) {
+            if (err) {
+                console.log("An error with the DB occurred in register");
+                console.log(err);
+                callback(err, null);
+            }
+            console.log(hash);
+        })
+    });
 
 
     res.redirect('/');

@@ -1,21 +1,5 @@
 /*jslint devel: true */
 
-// Source code for below: https://phppot.com/jquery/live-username-availability-check-using-php-and-jquery-ajax/
-
-function checkAvailability() {
-    $("#loaderIcon").show();
-    jQuery.ajax({
-        url: "check_availability.php",
-        data: 'username=' + $("#field_username").val(),
-        type: "POST",
-        success: function (data) {
-            $("#user-availability-status").html(data);
-            $("#loaderIcon").hide();
-        },
-        error: function () {}
-    });
-}
-
 // Source code for below: https://www.the-art-of-web.com/javascript/validate-password/
 
 

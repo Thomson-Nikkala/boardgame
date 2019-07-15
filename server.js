@@ -115,9 +115,9 @@ function get_game(params, res, callback) {
     var max_weight = params.max_weight;
     var best_game_score = 0;
     var best_board_game = 1; // default is Azul
-    sql = "SELECT * from board_game";
+    sql = 'SELECT * from board_game';
 
-    var board_games = pool.query(sql, params, function (err, result) {
+    var board_games = pool.query(sql, function (err, result) {
         if (err) {
             console.log("An error with the DB occurred in get_game.");
             console.log(err);
@@ -138,7 +138,7 @@ function get_game(params, res, callback) {
     var game_max_weight = 0;
     var game_score = 0;
 
-    for (var i = 0; j = board_games.result.length, i < j; i++) {
+    for (var i = 0; j = board_games.result.rows.length, i < j; i++) {
         game = board_games.results[i].board_game;
         game_score = 0;
         game_min_players = board_games.result[i].min_players;

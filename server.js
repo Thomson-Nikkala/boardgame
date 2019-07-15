@@ -140,7 +140,7 @@ function get_game(params, res, callback) {
         var game_score = 0;
 
         for (var i = 0; j = result.rows.length, i < j; i++) {
-            game = board_games.results[i].board_game;
+            game = results.rows[i].board_game;
             game_score = 0;
             game_min_players = board_games.result[i].min_players;
             game_max_players = board_games.result[i].max_players;

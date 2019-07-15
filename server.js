@@ -119,10 +119,9 @@ function get_game(params, res, callback) {
     var max_weight = params.max_weight;
     var best_game_score = 0;
     var best_board_game = 1; // default is Azul
-    var board_games = '';
     sql = 'SELECT * from board_game';
 
-    board_games = pool.query(sql, function (err, result) {
+    pool.query(sql, function (err, result) {
         if (err) {
             console.log("An error with the DB occurred in get_game.");
             console.log(err);
@@ -131,66 +130,119 @@ function get_game(params, res, callback) {
 
         //  console.log("Found DB result: " + JSON.stringify(result.rows));
 
+        var game = 0;
+        var game_min_players = 0;
+        var game_max_players = 0;
+        var game_min_playtime = 0;
+        var game_max_playtime = 0;
+        var game_min_weight = 0;
+        var game_max_weight = 0;
+        var game_score = 0;
+
+        for (var i = 0; j = result.rows.length, i < j; i++) {
+            game = board_games.results[i].board_game;
+            game_score = 0;
+            game_min_players = board_games.result[i].min_players;
+            game_max_players = board_games.result[i].max_players;
+            game_min_playtime = board_games.result[i].min_playtime;
+            game_min_playtime = board_games.result[i].max_playtime;
+            game_min_weight = board_games.result[i].min_weight;
+            game_min_weight = board_games.result[i].max_weight;
+
+            /* adjust game score for number of players
+            if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
+                game_score = game_score + 20;
+            }
+
+            // adjust game score for playtime
+            if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime))) {
+                game_score = game_score + 20;
+            }
+
+            // adjust game score for game weight
+            if ((game_weight > $min_weight) AND(game_weight < max_weight)) {
+                game_score = game_score + 20;
+            } */
+
+        }
+
+        if (game_score >= best_game_score) {
+            // check if this game has already been recommended to this gamer -- add later
+            best_game_score = game_score;
+            best_game = game;
+        }
+
+        get_game_from_db(best_game, function (error, result) {
+            if (error || result == null) {
+                res.status(500).json({
+                    success: false,
+                    data: error
+                })
+            } else {
+                console.log("Back from the get_game_from_db with result:", result);
+                const params = result[0];
+                res.render('pages/display_game', params);
+            }
+        });
+
+
         res.send(result);
     });
+    /*
+        var game = 0;
+        var game_min_players = 0;
+        var game_max_players = 0;
+        var game_min_playtime = 0;
+        var game_max_playtime = 0;
+        var game_min_weight = 0;
+        var game_max_weight = 0;
+        var game_score = 0;
 
+        for (var i = 0; j = board_games.result.rows.length, i < j; i++) {
+            game = board_games.results[i].board_game;
+            game_score = 0;
+            game_min_players = board_games.result[i].min_players;
+            game_max_players = board_games.result[i].max_players;
+            game_min_playtime = board_games.result[i].min_playtime;
+            game_min_playtime = board_games.result[i].max_playtime;
+            game_min_weight = board_games.result[i].min_weight;
+            game_min_weight = board_games.result[i].max_weight;
 
-    console.log("board_games is" + JSON.stringify(board_games));
+            /* adjust game score for number of players
+            if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
+                game_score = game_score + 20;
+            }
 
-    var game = 0;
-    var game_min_players = 0;
-    var game_max_players = 0;
-    var game_min_playtime = 0;
-    var game_max_playtime = 0;
-    var game_min_weight = 0;
-    var game_max_weight = 0;
-    var game_score = 0;
+            // adjust game score for playtime
+            if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime))) {
+                game_score = game_score + 20;
+            }
 
-    for (var i = 0; j = board_games.result.rows.length, i < j; i++) {
-        game = board_games.results[i].board_game;
-        game_score = 0;
-        game_min_players = board_games.result[i].min_players;
-        game_max_players = board_games.result[i].max_players;
-        game_min_playtime = board_games.result[i].min_playtime;
-        game_min_playtime = board_games.result[i].max_playtime;
-        game_min_weight = board_games.result[i].min_weight;
-        game_min_weight = board_games.result[i].max_weight;
+            // adjust game score for game weight
+            if ((game_weight > $min_weight) AND(game_weight < max_weight)) {
+                game_score = game_score + 20;
+            } 
 
-        /* adjust game score for number of players
-        if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
-            game_score = game_score + 20;
         }
 
-        // adjust game score for playtime
-        if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime))) {
-            game_score = game_score + 20;
+        if (game_score >= best_game_score) {
+            // check if this game has already been recommended to this gamer -- add later
+            best_game_score = game_score;
+            best_game = game;
         }
 
-        // adjust game score for game weight
-        if ((game_weight > $min_weight) AND(game_weight < max_weight)) {
-            game_score = game_score + 20;
-        } */
-
-    }
-
-    if (game_score >= best_game_score) {
-        // check if this game has already been recommended to this gamer -- add later
-        best_game_score = game_score;
-        best_game = game;
-    }
-
-    get_game_from_db(best_game, function (error, result) {
-        if (error || result == null) {
-            res.status(500).json({
-                success: false,
-                data: error
-            })
-        } else {
-            console.log("Back from the get_game_from_db with result:", result);
-            const params = result[0];
-            res.render('pages/display_game', params);
-        }
-    });
+        get_game_from_db(best_game, function (error, result) {
+            if (error || result == null) {
+                res.status(500).json({
+                    success: false,
+                    data: error
+                })
+            } else {
+                console.log("Back from the get_game_from_db with result:", result);
+                const params = result[0];
+                res.render('pages/display_game', params);
+            }
+        }); */
 
 }
 

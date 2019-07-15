@@ -138,15 +138,15 @@ function get_game(params, res, callback) {
     var game_max_weight = 0;
     var game_score = 0;
 
-    for (var i = 0; j = board_games.results.length, i < j; i++) {
+    for (var i = 0; j = board_games.result.length, i < j; i++) {
         game = board_games.results[i].board_game;
         game_score = 0;
-        game_min_players = board_games.results[i].min_players;
-        game_max_players = board_games.results[i].max_players;
-        game_min_playtime = board_games.results[i].min_playtime;
-        game_min_playtime = board_games.results[i].max_playtime;
-        game_min_weight = board_games.results[i].min_weight;
-        game_min_weight = board_games.results[i].max_weight;
+        game_min_players = board_games.result[i].min_players;
+        game_max_players = board_games.result[i].max_players;
+        game_min_playtime = board_games.result[i].min_playtime;
+        game_min_playtime = board_games.result[i].max_playtime;
+        game_min_weight = board_games.result[i].min_weight;
+        game_min_weight = board_games.result[i].max_weight;
 
         /* adjust game score for number of players
         if (!((game_max_players < min_players) OR(game_min_players > max_players))) {

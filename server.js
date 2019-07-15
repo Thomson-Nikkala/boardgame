@@ -124,10 +124,12 @@ function get_game(params, res, callback) {
             callback(err, null);
         }
 
-        console.log("Found DB result: " + JSON.stringify(result.rows));
+        //  console.log("Found DB result: " + JSON.stringify(result.rows));
 
         callback(null, result.rows);
     });
+
+    console.log("board_games is" + JSON.stringify(board_games));
 
     var game = 0;
     var game_min_players = 0;

@@ -51,7 +51,9 @@ app.get('/register', go_register);
 app.get('/games', go_preferences);
 
 // get game recommendation
-app.post('/games', get_recommendation);
+app.post('/games', function (req, res, next) {
+    get_recommendation(req.body, res);
+});
 
 // process form for registration
 app.post('/register', function (req, res, next) {

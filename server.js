@@ -112,6 +112,35 @@ function get_game(req, res) {
 
     // calculate recommended game here
 
+    var min_players = req.query.min_players;
+    var max_players = req.query.max_players;
+    var min_playtime = req.query.min_playtime;
+    var min_weight = req.query.min_weight;
+    var max_weight = req.query.max_weight;
+    var recommended_game = '';
+    var best_game_score = 0;
+    var best_board_game = 0;
+    sql = "SELECT * from board_game";
+
+    var board_games = pool.query(sql, params, function (err, result) {
+        if (err) {
+            console.log("An error with the DB occurred in get_game.");
+            console.log(err);
+            callback(err, null);
+        }
+
+        console.log("Found DB result: " + JSON.stringify(result.rows));
+
+        callback(null, result.rows);
+    });
+
+    var months = ['jan', 'feb', 'march', 'april', 'may', 'june', 'july', 'august', 'sep', 'oct', 'nov', 'dec'];
+    for (var i = 0; j = board_games.length, i < j; i++) {
+
+    }
+
+
+
     // var game = req.query.boardgame;
     var game = 1;
 

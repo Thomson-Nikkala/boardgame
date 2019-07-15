@@ -131,7 +131,7 @@ function get_game(params, res, callback) {
 
         //  console.log("Found DB result: " + JSON.stringify(result.rows));
 
-        res.send(result.rows);
+        res.send(result);
     });
 
 
@@ -174,7 +174,7 @@ function get_game(params, res, callback) {
     }
 
     if (game_score >= best_game_score) {
-        // check if this game has already been recommended to this gamer
+        // check if this game has already been recommended to this gamer -- add later
         best_game_score = game_score;
         best_game = game;
     }

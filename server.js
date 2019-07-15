@@ -140,7 +140,7 @@ function get_game(params, res, callback) {
         var game_score = 0;
 
         for (var i = 0; j = result.rows.length, i < j; i++) {
-            game = results.rows[i].board_game;
+            game = result[i].rows.board_game;
             game_score = 0;
             game_min_players = board_games.result[i].min_players;
             game_max_players = board_games.result[i].max_players;
@@ -186,8 +186,9 @@ function get_game(params, res, callback) {
         });
 
 
-        res.send(result);
+        callback(null, result.rows);
     });
+
     /*
         var game = 0;
         var game_min_players = 0;

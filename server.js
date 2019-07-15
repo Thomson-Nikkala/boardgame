@@ -50,6 +50,9 @@ app.get('/register', go_register);
 // go to page for game preferences
 app.get('/games', go_preferences);
 
+// get game recommendation
+app.post('/games', get_recommendation);
+
 // process form for registration
 app.post('/register', function (req, res, next) {
     register(req.body, res);
@@ -186,44 +189,6 @@ function register(params, res, callback) {
     res.redirect('/'); // gamePrefs later
 }
 
-function game_prefs(req, res) {
-
-    /*  var game = req.query.boardgame;
-      get_game_from_db(game, function (error, result) {
-          if (error || result == null) {
-              res.status(500).json({
-                  success: false,
-                  data: error
-              })
-          } else {
-              console.log("Back from the get_game_from_db with result:", result);
-              const params = result[0];
-              res.render('pages/display_game', params);
-          }
-      }); */
-
-}
-
-function use_prefs_to_get_game(game, callback) {
-
-    /* change all this
-    var sql = "SELECT name, image_url, properties FROM board_game WHERE board_game = $1::int";
-    var params = [game];
-
-    pool.query(sql, params, function (err, result) {
-        if (err) {
-            console.log("An error with the DB occurred in get_game_from_db.");
-            console.log(err);
-            callback(err, null);
-        }
-
-        console.log("Found DB result: " + JSON.stringify(result.rows));
-
-        callback(null, result.rows);
-    })
-
-    res.render('pages/games.ejs'); */
-}
 
 function get_gamer_id(username, callback) {
     var sql = "SELECT gamer FROM gamer WHERE username = $1";
@@ -248,4 +213,10 @@ function edit_profile(req, res) {
 
 function go_preferences(req, res) {
     res.render('pages/games.ejs');
+}
+
+function get_recommendation(req, res) {
+    game = 0;
+    // calculate game here
+    res.render('pages/games.ejs?boardgame=1');
 }

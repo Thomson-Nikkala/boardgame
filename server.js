@@ -104,6 +104,10 @@ app.get('/usercheck', function (req, res) {
 Functions (should put in separate file later)
 ******************************/
 
+function setValue(value) {
+    board_games = value;
+}
+
 function get_game(params, res, callback) {
 
     // calculate recommended game here
@@ -115,10 +119,10 @@ function get_game(params, res, callback) {
     var max_weight = params.max_weight;
     var best_game_score = 0;
     var best_board_game = 1; // default is Azul
+    var board_games = '';
     sql = 'SELECT * from board_game';
 
-    var board_games = '';
-    pool.query(sql, function (err, result) {
+    board_games = pool.query(sql, function (err, result) {
         if (err) {
             console.log("An error with the DB occurred in get_game.");
             console.log(err);
@@ -126,9 +130,10 @@ function get_game(params, res, callback) {
         }
 
         //  console.log("Found DB result: " + JSON.stringify(result.rows));
-        board_games = result.rows;
-        callback(null, result.rows);
+
+        res.send(result.rows);
     });
+
 
     console.log("board_games is" + JSON.stringify(board_games));
 
@@ -188,6 +193,7 @@ function get_game(params, res, callback) {
     });
 
 }
+
 
 function get_game_from_db(game, callback) {
 

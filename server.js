@@ -237,5 +237,5 @@ function go_preferences(req, res) {
 function get_recommendation(req, res) {
     game = 0;
     // calculate game here
-    res.render('pages/games.ejs?boardgame=1');
+    res.render('/getGame?boardgame=1');
 }

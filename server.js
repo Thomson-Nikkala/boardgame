@@ -153,7 +153,7 @@ function get_game(req, res) {
         game_min_weight = board_games.results[i].min_weight;
         game_min_weight = board_games.results[i].max_weight;
 
-        // adjust game score for number of players
+        /* adjust game score for number of players
         if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
             game_score = game_score + 20;
         }
@@ -166,7 +166,7 @@ function get_game(req, res) {
         // adjust game score for game weight
         if ((game_weight > $min_weight) AND(game_weight < max_weight)) {
             game_score = game_score + 20;
-        }
+        } */
 
     }
 

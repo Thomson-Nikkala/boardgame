@@ -239,5 +239,5 @@ function go_preferences(req, res) {
 function get_recommendation(req, res) {
     boardgame = 1;
     // calculate game here
-    res.render('pages/getGame', boardgame);
+    get_game(boardgame);
 }

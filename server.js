@@ -40,17 +40,13 @@ app.get('/', function (req, res, next) {
 // create web service endpoint for game preferences
 app.get('/gamePrefs', game_prefs);
 
-// create web service endpoint for get game request
-app.get('/getGame', get_game);
-
 // go to page for registration
 app.get('/register', go_register);
-
 
 // go to page for game preferences
 app.get('/games', go_preferences);
 
-// get game recommendation
+// get game recommendation web service endpoint
 app.post('/games', function (req, res, next) {
     get_game(req.body, res);
 });
@@ -108,16 +104,15 @@ app.get('/usercheck', function (req, res) {
 Functions (should put in separate file later)
 ******************************/
 
-function get_game(req, res) {
+function get_game(params, res, callback) {
 
     // calculate recommended game here
 
-    var min_players = req.query.min_players;
-    var max_players = req.query.max_players;
-    var min_playtime = req.query.min_playtime;
-    var min_weight = req.query.min_weight;
-    var max_weight = req.query.max_weight;
-    var recommended_game = '';
+    var min_players = params.min_players;
+    var max_players = params.max_players;
+    var min_playtime = params.min_playtime;
+    var min_weight = params.min_weight;
+    var max_weight = params.max_weight;
     var best_game_score = 0;
     var best_board_game = 1; // default is Azul
     sql = "SELECT * from board_game";

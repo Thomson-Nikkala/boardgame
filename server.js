@@ -52,7 +52,7 @@ app.get('/games', go_preferences);
 
 // get game recommendation
 app.post('/games', function (req, res, next) {
-    get_recommendation(req.body, res);
+    get_game(req.body, res);
 });
 
 // process form for registration
@@ -109,7 +109,12 @@ Functions (should put in separate file later)
 ******************************/
 
 function get_game(req, res) {
-    var game = req.query.boardgame;
+
+    // calculate recommended game here
+
+    // var game = req.query.boardgame;
+    var game = 1;
+
     get_game_from_db(game, function (error, result) {
         if (error || result == null) {
             res.status(500).json({
@@ -234,10 +239,4 @@ function edit_profile(req, res) {
 
 function go_preferences(req, res) {
     res.render('pages/games.ejs');
-}
-
-function get_recommendation(req, res) {
-    boardgame = 1;
-    // calculate game here
-    get_game(boardgame);
 }

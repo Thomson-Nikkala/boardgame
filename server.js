@@ -117,7 +117,8 @@ function get_game(params, res, callback) {
     var best_board_game = 1; // default is Azul
     sql = 'SELECT * from board_game';
 
-    var board_games = pool.query(sql, function (err, result) {
+    var board_games = '';
+    pool.query(sql, function (err, result) {
         if (err) {
             console.log("An error with the DB occurred in get_game.");
             console.log(err);
@@ -125,7 +126,7 @@ function get_game(params, res, callback) {
         }
 
         //  console.log("Found DB result: " + JSON.stringify(result.rows));
-
+        board_games = result.rows;
         callback(null, result.rows);
     });
 

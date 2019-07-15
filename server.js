@@ -119,7 +119,7 @@ function get_game(req, res) {
     var max_weight = req.query.max_weight;
     var recommended_game = '';
     var best_game_score = 0;
-    var best_board_game = 0;
+    var best_board_game = 1; // default is Azul
     sql = "SELECT * from board_game";
 
     var board_games = pool.query(sql, params, function (err, result) {
@@ -134,17 +134,44 @@ function get_game(req, res) {
         callback(null, result.rows);
     });
 
-    var months = ['jan', 'feb', 'march', 'april', 'may', 'june', 'july', 'august', 'sep', 'oct', 'nov', 'dec'];
-    for (var i = 0; j = board_games.length, i < j; i++) {
+    var game = 0;
+    var game_min_players = 0;
+    var game_max_players = 0;
+    var game_min_playtime = 0;
+    var game_max_playtime = 0;
+    var game_min_weight = 0;
+    var game_max_weight = 0;
+    var game_score = 0;
+
+    for (var i = 0; j = board_games.results.length, i < j; i++) {
+        game = board_games.results[i].board_game;
+        game_score = 0;
+        game_min_players = board_games.results[i].min_players;
+        game_max_players = board_games.results[i].max_players;
+        game_min_playtime = board_games.results[i].min_playtime;
+        game_min_playtime = board_games.results[i].max_playtime;
+        game_min_weight = board_games.results[i].min_weight;
+        game_min_weight = board_games.results[i].max_weight;
+
+        // adjust game score for number of players
+        if (!((game_max_players < min_players) OR(game_min_players > max_players))) game_score = game_score + 20;
+
+        // adjust game score for playtime
+        if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime))) game_score = game_score + 20;
+
+        // adjust game score for game weight
+        if ((game_weight > $min_weight) AND(game_weight < max_weight)) game_score = game_score + 20;
 
     }
 
+    if (game_score >= best_game_score) {
+        // check if this game has already been recommended to this gamer
 
+        best_game_score = game_score;
+        best_game = game;
+    }
 
-    // var game = req.query.boardgame;
-    var game = 1;
-
-    get_game_from_db(game, function (error, result) {
+    get_game_from_db(best_game, function (error, result) {
         if (error || result == null) {
             res.status(500).json({
                 success: false,

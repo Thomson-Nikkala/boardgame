@@ -175,20 +175,19 @@ function get_game(req, res) {
         best_game_score = game_score;
         best_game = game;
     }
-}
 
-get_game_from_db(best_game, function (error, result) {
-    if (error || result == null) {
-        res.status(500).json({
-            success: false,
-            data: error
-        })
-    } else {
-        console.log("Back from the get_game_from_db with result:", result);
-        const params = result[0];
-        res.render('pages/display_game', params);
-    }
-});
+    get_game_from_db(best_game, function (error, result) {
+        if (error || result == null) {
+            res.status(500).json({
+                success: false,
+                data: error
+            })
+        } else {
+            console.log("Back from the get_game_from_db with result:", result);
+            const params = result[0];
+            res.render('pages/display_game', params);
+        }
+    });
 
 }
 

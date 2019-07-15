@@ -154,35 +154,41 @@ function get_game(req, res) {
         game_min_weight = board_games.results[i].max_weight;
 
         // adjust game score for number of players
-        if (!((game_max_players < min_players) OR(game_min_players > max_players))) game_score = game_score + 20;
+        if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
+            game_score = game_score + 20;
+        }
 
         // adjust game score for playtime
-        if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime))) game_score = game_score + 20;
+        if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime))) {
+            game_score = game_score + 20;
+        }
 
         // adjust game score for game weight
-        if ((game_weight > $min_weight) AND(game_weight < max_weight)) game_score = game_score + 20;
+        if ((game_weight > $min_weight) AND(game_weight < max_weight)) {
+            game_score = game_score + 20;
+        }
 
     }
 
     if (game_score >= best_game_score) {
         // check if this game has already been recommended to this gamer
-
         best_game_score = game_score;
         best_game = game;
     }
+}
 
-    get_game_from_db(best_game, function (error, result) {
-        if (error || result == null) {
-            res.status(500).json({
-                success: false,
-                data: error
-            })
-        } else {
-            console.log("Back from the get_game_from_db with result:", result);
-            const params = result[0];
-            res.render('pages/display_game', params);
-        }
-    });
+get_game_from_db(best_game, function (error, result) {
+    if (error || result == null) {
+        res.status(500).json({
+            success: false,
+            data: error
+        })
+    } else {
+        console.log("Back from the get_game_from_db with result:", result);
+        const params = result[0];
+        res.render('pages/display_game', params);
+    }
+});
 
 }
 

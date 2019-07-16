@@ -136,7 +136,7 @@ function get_game(req, res) {
                 data: error
             });
         } else {
-            const board_games = json(res);
+            const board_games = stringify(res);
             console.log("board_games is " + board_games);
             // calculate best board game
             for (var i = 0; j = board_games.length, i < j; i++) {

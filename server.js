@@ -174,8 +174,8 @@ function get_game(req, res) {
             console.log("Best board game is" + best_board_game);
 
             // retrieve best board game from database based on board_game id
-            get_game_from_db(best_board_game, function (error, result) {
-                if (error || result == null) {
+            get_game_from_db(best_board_game, function (err, res) {
+                if (err || res == null) {
                     res.status(500).json({
                         success: false,
                         data: error

@@ -140,38 +140,43 @@ function get_game(req, res) {
             // calculate best board game
 
             const game_keys = Object.keys(board_games);
-            game_keys.forEach(board_game) {
-                game = entries[board_game];
-                game_score = 0;
-                game_min_players = entries[min_players];
-                console.log(game_min_players);
-                game_max_players = entries[max_players];
-                game_min_playtime = entries[min_playtime];
-                game_min_playtime = entries[max_playtime];
-                game_min_weight = entries[min_weight];
-                game_min_weight = entries[max_weight];
+            const game_entries = Object.entries(board_games);
 
-                /* adjust game score for number of players
-        if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
-            game_score = game_score + 20;
-        }
+            console.log(game_keys);
+            console.log(game_entries);
 
-        // adjust game score for playtime
-        if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime))) {
-            game_score = game_score + 20;
-        }
+            /*    game_keys.forEach(function(key)) {
+                    game = entries[board_game];
+                    game_score = 0;
+                    game_min_players = entries[min_players];
+                    console.log(game_min_players);
+                    game_max_players = entries[max_players];
+                    game_min_playtime = entries[min_playtime];
+                    game_min_playtime = entries[max_playtime];
+                    game_min_weight = entries[min_weight];
+                    game_min_weight = entries[max_weight];
 
-        // adjust game score for game weight
-        if ((game_weight > $min_weight) AND(game_weight < max_weight)) {
-            game_score = game_score + 20;
-        } */
+                    /* adjust game score for number of players
+            if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
+                game_score = game_score + 20;
+            }
 
-                if (game_score >= best_game_score) {
-                    // check if this game has already been recommended to this gamer -- add later
-                    best_game_score = game_score;
-                    best_board_game = game;
-                }
-            } // end for loop
+            // adjust game score for playtime
+            if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime))) {
+                game_score = game_score + 20;
+            }
+
+            // adjust game score for game weight
+            if ((game_weight > $min_weight) AND(game_weight < max_weight)) {
+                game_score = game_score + 20;
+            } 
+
+                    if (game_score >= best_game_score) {
+                        // check if this game has already been recommended to this gamer -- add later
+                        best_game_score = game_score;
+                        best_board_game = game;
+                    }
+                } // end for loop */
 
             console.log("Best board game is" + best_board_game);
 

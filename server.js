@@ -131,7 +131,7 @@ function get_game(req, res) {
     get_all_games(function (err, res) {
         // this is the callback function to return the information
         if (err || res == null) {
-            res.status(500).json({
+            response.status(500).json({
                 success: false,
                 data: error
             });
@@ -179,7 +179,7 @@ function get_game(req, res) {
             // retrieve best board game from database based on board_game id
             get_game_from_db(best_board_game, function (err, res) {
                 if (err || res == null) {
-                    res.status(500).json({
+                    response.status(500).json({
                         success: false,
                         data: error
                     })

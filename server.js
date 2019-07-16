@@ -139,8 +139,8 @@ function get_game(req, res) {
             const board_games = res; // Javascript object
             // calculate best board game
 
-            const entries = Object.entries(board_games);
-            for (const [board_game, min_players, max_players, min_playtime, max_playtime, min_weight, max_weight] of entries) {
+            const game_keys = Object.keys(board_games);
+            game_keys.forEach([board_game]) {
                 game = entries[board_game];
                 game_score = 0;
                 game_min_players = entries[min_players];

@@ -141,8 +141,7 @@ function get_game(req, res) {
             // calculate best board game
 
             const entries = Object.entries(board_games);
-            for
-            const [board_game] of entries {
+            for (const [board_game] of entries) {
                 game = entries[board_game];
                 console.log(board_game);
                 game_score = 0;

@@ -198,13 +198,13 @@ function get_all_games(callback) {
     const sql = "SELECT * from board_game";
 
     pool.query(sql, function (err, result) {
-            if (err) {
-                console.log("An error with the DB occurred in get_all_games.");
-                console.log(err);
-                callback(err, null);
-            } else {
-                console.log("Found DB result: " + JSON.stringify(result.rows));
-                callback(null, result.rows));
+        if (err) {
+            console.log("An error with the DB occurred in get_all_games.");
+            console.log(err);
+            callback(err, null);
+        } else {
+            console.log("Found DB result: " + JSON.stringify(result.rows));
+            callback(null, result.rows);
         }
     });
 } // end of get_all_games

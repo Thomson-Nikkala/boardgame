@@ -1,6 +1,6 @@
-var express = require('express');
+const express = require('express');
 const path = require('path');
-var app = express();
+const app = express();
 var body_parser = require('body-parser');
 const bcrypt = require('bcrypt');
 const PORT = process.env.PORT || 3000;
@@ -15,16 +15,18 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 app.engine('html', require('ejs').renderFile);
 
-// use body parser to easy fetch post body
+// use body parser to make it easy to fetch post body
 app.use(body_parser.urlencoded({
     extended: false
 }));
 app.use(body_parser.json())
 
+// Postgres database connection module
 const {
     Pool
 } = require('pg');
 
+// Establish a new connection to the data source
 const connection_string = process.env.DATABASE_URL;
 const pool = new Pool({
     connectionString: connection_string
@@ -104,13 +106,10 @@ app.get('/usercheck', function (req, res) {
 Functions (should put in separate file later)
 ******************************/
 
-function setValue(value) {
-    board_games = value;
-}
+// Get board game recommendation section---------------------------
 
+// main function to get the best board game for the user based on preferences
 function get_game(params, res, callback) {
-
-    // calculate recommended game here
 
     var min_players = params.min_players;
     var max_players = params.max_players;
@@ -119,242 +118,199 @@ function get_game(params, res, callback) {
     var max_weight = params.max_weight;
     var best_game_score = 0;
     var best_board_game = 1; // default is Azul
-    sql = 'SELECT * from board_game';
+    var game = 0;
+    var game_min_players = 0;
+    var game_max_players = 0;
+    var game_min_playtime = 0;
+    var game_max_playtime = 0;
+    var game_min_weight = 0;
+    var game_max_weight = 0;
+    var game_score = 0;
 
-    pool.query(sql, function (err, result) {
-        if (err) {
-            console.log("An error with the DB occurred in get_game.");
-            console.log(err);
-            callback(err, null);
+    // handler to get all board game information and provide a callback when its done
+    get_all_games(function (err, res) {
+                // this is the callback function to return the information
+                if (error || res == null || res.length != 1) {
+                    response.status(500).json({
+                        success: false,
+                        data: error
+                    });
+                } else {
+                    const board_games = res.rows;
+
+                    // calculate best board game
+                    for (var i = 0; j = board_games.length, i < j; i++) {
+                        game = board_games[i].gamer;
+                        game_score = 0;
+                        game_min_players = board_games[i].min_players;
+                        game_max_players = board_games[i].max_players;
+                        game_min_playtime = board_games[i].min_playtime;
+                        game_min_playtime = board_games[i].max_playtime;
+                        game_min_weight = board_games[i].min_weight;
+                        game_min_weight = board_games[i].max_weight;
+
+                        /* adjust game score for number of players
+        if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
+            game_score = game_score + 20;
         }
 
-        //  console.log("Found DB result: " + JSON.stringify(result.rows));
-
-        var game = 0;
-        var game_min_players = 0;
-        var game_max_players = 0;
-        var game_min_playtime = 0;
-        var game_max_playtime = 0;
-        var game_min_weight = 0;
-        var game_max_weight = 0;
-        var game_score = 0;
-
-        for (var i = 0; j = result.rows.length, i < j; i++) {
-            game = result[i].rows.board_game;
-            game_score = 0;
-            game_min_players = board_games.result[i].min_players;
-            game_max_players = board_games.result[i].max_players;
-            game_min_playtime = board_games.result[i].min_playtime;
-            game_min_playtime = board_games.result[i].max_playtime;
-            game_min_weight = board_games.result[i].min_weight;
-            game_min_weight = board_games.result[i].max_weight;
-
-            /* adjust game score for number of players
-            if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
-                game_score = game_score + 20;
-            }
-
-            // adjust game score for playtime
-            if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime))) {
-                game_score = game_score + 20;
-            }
-
-            // adjust game score for game weight
-            if ((game_weight > $min_weight) AND(game_weight < max_weight)) {
-                game_score = game_score + 20;
-            } */
-
+        // adjust game score for playtime
+        if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime))) {
+            game_score = game_score + 20;
         }
 
-        if (game_score >= best_game_score) {
-            // check if this game has already been recommended to this gamer -- add later
-            best_game_score = game_score;
-            best_game = game;
-        }
+        // adjust game score for game weight
+        if ((game_weight > $min_weight) AND(game_weight < max_weight)) {
+            game_score = game_score + 20;
+        } */
 
-        get_game_from_db(best_game, function (error, result) {
-            if (error || result == null) {
-                res.status(500).json({
-                    success: false,
-                    data: error
-                })
-            } else {
-                console.log("Back from the get_game_from_db with result:", result);
-                const params = result[0];
-                res.render('pages/display_game', params);
-            }
-        });
+                        if (game_score >= best_game_score) {
+                            // check if this game has already been recommended to this gamer -- add later
+                            best_game_score = game_score;
+                            best_board_game = game;
+                        }
+                    } // end for loop
 
+                    console.log("Best board game is" + best_board_game);
 
-        callback(null, result.rows);
-    });
+                    // retrieve best board game from database based on board_game id
+                    get_game_from_db(best_board_game, function (error, result) {
+                        if (error || result == null) {
+                            res.status(500).json({
+                                success: false,
+                                data: error
+                            })
+                        } else {
+                            console.log("Back from the get_game_from_db with result:", result);
+                            const params = result[0];
+                            res.render('pages/display_game', params);
+                        }
+                    });
 
-    /*
-        var game = 0;
-        var game_min_players = 0;
-        var game_max_players = 0;
-        var game_min_playtime = 0;
-        var game_max_playtime = 0;
-        var game_min_weight = 0;
-        var game_max_weight = 0;
-        var game_score = 0;
+                }
 
-        for (var i = 0; j = board_games.result.rows.length, i < j; i++) {
-            game = board_games.results[i].board_game;
-            game_score = 0;
-            game_min_players = board_games.result[i].min_players;
-            game_max_players = board_games.result[i].max_players;
-            game_min_playtime = board_games.result[i].min_playtime;
-            game_min_playtime = board_games.result[i].max_playtime;
-            game_min_weight = board_games.result[i].min_weight;
-            game_min_weight = board_games.result[i].max_weight;
+                // get all of the games from the database   
+                function get_all_games() {
+                    const sql = "SELECT * from board_game";
 
-            /* adjust game score for number of players
-            if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
-                game_score = game_score + 20;
-            }
-
-            // adjust game score for playtime
-            if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime))) {
-                game_score = game_score + 20;
-            }
-
-            // adjust game score for game weight
-            if ((game_weight > $min_weight) AND(game_weight < max_weight)) {
-                game_score = game_score + 20;
-            } 
-
-        }
-
-        if (game_score >= best_game_score) {
-            // check if this game has already been recommended to this gamer -- add later
-            best_game_score = game_score;
-            best_game = game;
-        }
-
-        get_game_from_db(best_game, function (error, result) {
-            if (error || result == null) {
-                res.status(500).json({
-                    success: false,
-                    data: error
-                })
-            } else {
-                console.log("Back from the get_game_from_db with result:", result);
-                const params = result[0];
-                res.render('pages/display_game', params);
-            }
-        }); */
-
-}
-
-
-function get_game_from_db(game, callback) {
-
-    var sql = "SELECT name, image_url, properties FROM board_game WHERE board_game = $1::int";
-    var params = [game];
-
-    pool.query(sql, params, function (err, result) {
-        if (err) {
-            console.log("An error with the DB occurred in get_game_from_db.");
-            console.log(err);
-            callback(err, null);
-        }
-
-        console.log("Found DB result: " + JSON.stringify(result.rows));
-
-        callback(null, result.rows);
-    })
-}
-
-function go_register(req, res) {
-    res.render('pages/register.ejs');
-}
-
-function register(params, res, callback) {
-    var username = params.username;
-    var display_name = params.r_display_name;
-    var email = params.r_email;
-    var password = params.r_password;
-    const salt_rounds = 12;
-    //  create gamer
-    bcrypt.hash(password, salt_rounds, function (err, hash) {
-        var sql = "INSERT INTO gamer (username, display_name, email, hashed_password) VALUES ($1, $2, $3, $4);";
-        pool.query(sql, [username, display_name, email, hash], function callback(err, result) {
-            if (err) {
-                console.log("An error with the DB occurred in register.");
-                console.log(err);
-                callback(err, null);
-            }
-        })
-    });
-    // get gamer's gamer id number
-    console.log('HERE');
-    var gamer_id = function (req, res) {
-        get_gamer_id(username, function (err, rows) {
-            if (err)
-                return next(err);
-            console.log(rows);
-            res.json(rows);
-            res.send(rows[0].gamer);
-        });
-    };
-
-    console.log('Gamer id', gamer_id);
-    default_prefs = '{"min_players":2, "max_players":4, "min_playtime":30, "max_playtime":120, "min_weight":1.5, "max_weight":2.5, "themes":[], "mechanisms":[]}';
-    // create default game preferences for gamer
-    var sql3 = "INSERT INTO preference(gamer, preferences) VALUES ($1, $2)";
-    pool.query(sql3, [gamer_id, default_prefs], function callback(err, result) {
-        if (err) {
-            console.log("An error with the DB occurred in default prefs.");
-            console.log(err);
-            callback(err, null);
-        }
-    })
-
-    res.redirect('/'); // gamePrefs later
-}
-
-function game_prefs(req, res) {
-
-    /*  var game = req.query.boardgame;
-      get_game_from_db(game, function (error, result) {
-          if (error || result == null) {
-              res.status(500).json({
-                  success: false,
-                  data: error
-              })
-          } else {
-              console.log("Back from the get_game_from_db with result:", result);
-              const params = result[0];
-              res.render('pages/display_game', params);
-          }
-      }); */
-
-}
+                    pool.query(sql, function (err, result) {
+                        if (err) {
+                            console.log("An error with the DB occurred in get_all_games.");
+                            console.log(err);
+                            callback(err, null);
+                        } else {
+                            //  console.log("Found DB result: " + JSON.stringify(result.rows));
+                            callback(null, result.rows);
+                        }
+                    });
+                } // end of get_all_games
 
 
 
-function get_gamer_id(username, callback) {
-    var sql = "SELECT gamer FROM gamer WHERE username = $1";
-    var params = [username];
-    pool.query(sql, params, function (err, result) {
-        if (err) {
-            console.log("An error with the DB occurred in get_gamer_id.");
-            console.log(err);
-            callback(err, null);
-        }
-        callback(null, result.rows);
-    })
-}
 
-function go_login(req, res) {
-    res.render('pages/login.ejs');
-}
 
-function edit_profile(req, res) {
-    res.render('pages/edit_profile.ejs');
-}
+                function get_game_from_db(game, callback) {
 
-function go_preferences(req, res) {
-    res.render('pages/games.ejs');
-}
+                    var sql = "SELECT name, image_url, properties FROM board_game WHERE board_game = $1::int";
+                    var params = [game];
+
+                    pool.query(sql, params, function (err, result) {
+                        if (err) {
+                            console.log("An error with the DB occurred in get_game_from_db.");
+                            console.log(err);
+                            callback(err, null);
+                        }
+
+                        console.log("Found DB result: " + JSON.stringify(result.rows));
+
+                        callback(null, result.rows);
+                    })
+                }
+
+
+
+
+                // Registration section----------------------------------------------
+
+                function go_register(req, res) {
+                    res.render('pages/register.ejs');
+                }
+
+                function register(params, res, callback) {
+                    var username = params.username;
+                    var display_name = params.r_display_name;
+                    var email = params.r_email;
+                    var password = params.r_password;
+                    const salt_rounds = 12;
+                    //  create gamer
+                    bcrypt.hash(password, salt_rounds, function (err, hash) {
+                        var sql = "INSERT INTO gamer (username, display_name, email, hashed_password) VALUES ($1, $2, $3, $4);";
+                        pool.query(sql, [username, display_name, email, hash], function callback(err, result) {
+                            if (err) {
+                                console.log("An error with the DB occurred in register.");
+                                console.log(err);
+                                callback(err, null);
+                            }
+                        })
+                    });
+                    // get gamer's gamer id number
+                    console.log('HERE');
+                    var gamer_id = function (req, res) {
+                        get_gamer_id(username, function (err, rows) {
+                            if (err)
+                                return next(err);
+                            console.log(rows);
+                            res.json(rows);
+                            res.send(rows[0].gamer);
+                        });
+                    };
+
+                    console.log('Gamer id', gamer_id);
+                    default_prefs = '{"min_players":2, "max_players":4, "min_playtime":30, "max_playtime":120, "min_weight":1.5, "max_weight":2.5, "themes":[], "mechanisms":[]}';
+                    // create default game preferences for gamer
+                    var sql3 = "INSERT INTO preference(gamer, preferences) VALUES ($1, $2)";
+                    pool.query(sql3, [gamer_id, default_prefs], function callback(err, result) {
+                        if (err) {
+                            console.log("An error with the DB occurred in default prefs.");
+                            console.log(err);
+                            callback(err, null);
+                        }
+                    })
+
+                    res.redirect('/'); // gamePrefs later
+                }
+
+                //  Update gaming preferences section------------------------------
+
+                function go_preferences(req, res) {
+                    res.render('pages/games.ejs');
+                }
+
+                function game_prefs(req, res) {
+
+                }
+
+                // Login section----------------------------------------------------
+
+                function get_gamer_id(username, callback) {
+                    var sql = "SELECT gamer FROM gamer WHERE username = $1";
+                    var params = [username];
+                    pool.query(sql, params, function (err, result) {
+                        if (err) {
+                            console.log("An error with the DB occurred in get_gamer_id.");
+                            console.log(err);
+                            callback(err, null);
+                        }
+                        callback(null, result.rows);
+                    })
+                }
+
+                function go_login(req, res) {
+                    res.render('pages/login.ejs');
+                }
+
+                // Edit Profile section----------------------------------------------
+
+                function edit_profile(req, res) {
+                    res.render('pages/edit_profile.ejs');
+                }

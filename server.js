@@ -109,13 +109,13 @@ Functions (should put in separate file later)
 // Get board game recommendation section---------------------------
 
 // main function to get the best board game for the user based on preferences
-function get_game(params, res, callback) {
+function get_game(req, res) {
 
-    var min_players = params.min_players;
-    var max_players = params.max_players;
-    var min_playtime = params.min_playtime;
-    var min_weight = params.min_weight;
-    var max_weight = params.max_weight;
+    var min_players = req.min_players;
+    var max_players = req.max_players;
+    var min_playtime = req.min_playtime;
+    var min_weight = req.min_weight;
+    var max_weight = req.max_weight;
     var best_game_score = 0;
     var best_board_game = 1; // default is Azul
     var game = 0;
@@ -131,7 +131,7 @@ function get_game(params, res, callback) {
     get_all_games(function (err, res) {
         // this is the callback function to return the information
         if (error || res == null || res.length != 1) {
-            response.status(500).json({
+            res.status(500).json({
                 success: false,
                 data: error
             });
@@ -194,7 +194,7 @@ function get_game(params, res, callback) {
 
 
 // get all of the games from the database   
-function get_all_games() {
+function get_all_games(callback) {
     const sql = "SELECT * from board_game";
 
     pool.query(sql, function (err, result) {

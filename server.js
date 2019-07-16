@@ -130,7 +130,7 @@ function get_game(req, res) {
     // handler to get all board game information and provide a callback when its done
     get_all_games(function (err, res) {
         // this is the callback function to return the information
-        if (error || res == null || res.length != 1) {
+        if (err || res == null) {
             res.status(500).json({
                 success: false,
                 data: error

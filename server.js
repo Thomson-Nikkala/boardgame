@@ -181,8 +181,8 @@ function get_game(req, res) {
                         data: error
                     })
                 } else {
-                    console.log("Back from the get_game_from_db with result:", result);
-                    const params = result[0];
+                    console.log("Back from the get_game_from_db with result:", res);
+                    const params = res[0];
                     res.render('pages/display_game', params);
                 }
             });

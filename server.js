@@ -140,7 +140,7 @@ function get_game(req, res) {
             // calculate best board game
 
             const entries = Object.entries(board_games);
-            for (const [board_game] of entries) {
+            for (const [board_game, min_players, max_players, min_playtime, max_playtime, min_weight, max_weight] of entries) {
                 game = entries[board_game];
                 game_score = 0;
                 game_min_players = entries[min_players];
@@ -205,7 +205,7 @@ function get_all_games(callback) {
             console.log(err);
             callback(err, null);
         } else {
-            console.log("Found DB result: " + JSON.stringify(result.rows));
+            //  console.log("Found DB result: " + JSON.stringify(result.rows));
             callback(null, result.rows);
         }
     });

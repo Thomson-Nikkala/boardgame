@@ -140,7 +140,7 @@ function get_game(req, res) {
             // calculate best board game
 
             const game_keys = Object.keys(board_games);
-            game_keys.forEach([board_game]) {
+            game_keys.forEach(board_game) {
                 game = entries[board_game];
                 game_score = 0;
                 game_min_players = entries[min_players];

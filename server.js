@@ -136,18 +136,22 @@ function get_game(req, res) {
                 data: error
             });
         } else {
-            const board_games = res;
+            const board_games = res; // JSON object
             console.log("board_games is " + board_games);
             // calculate best board game
-            for (var i = 0; j = board_games.length, i < j; i++) {
-                game = board_games[i].gamer;
+
+            const entries = Object.entries(board_games);
+            for
+            const [board_game] of entries {
+                game = entries[board_game];
+                console.log(board_game);
                 game_score = 0;
-                game_min_players = board_games[i].min_players;
-                game_max_players = board_games[i].max_players;
-                game_min_playtime = board_games[i].min_playtime;
-                game_min_playtime = board_games[i].max_playtime;
-                game_min_weight = board_games[i].min_weight;
-                game_min_weight = board_games[i].max_weight;
+                //       game_min_players = board_games[i].min_players;
+                //       game_max_players = board_games[i].max_players;
+                //      game_min_playtime = board_games[i].min_playtime;
+                //      game_min_playtime = board_games[i].max_playtime;
+                //     game_min_weight = board_games[i].min_weight;
+                //     game_min_weight = board_games[i].max_weight;
 
                 /* adjust game score for number of players
         if (!((game_max_players < min_players) OR(game_min_players > max_players))) {

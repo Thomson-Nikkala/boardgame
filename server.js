@@ -156,7 +156,8 @@ function get_game(req, res) {
                 game_weight = parseInt(game_details[4], 10);
 
                 // adjust game score for number of players
-                if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
+                if (!((game_max_players < min_players))) //OR(game_min_players > max_players))) 
+                {
                     game_score = game_score + 20;
 
                 };

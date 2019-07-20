@@ -7,6 +7,14 @@ var session = require('express-session');
 const bcrypt = require('bcrypt');
 const PORT = process.env.PORT || 3000;
 
+app.use(session({
+    secret: 'ssshhhhh',
+    saveUninitialized: true,
+    resave: true
+}));
+
+var sess;
+
 // tell it to use the public directory as one where static files live
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -38,11 +46,12 @@ app.set('port', (process.env.PORT || 5000));
 
 // home
 app.get('/', function (req, res, next) {
+    sess = req.session;
+    if (!(sess.gamer)) {
+        sess.gamer = 1;
+    }
     res.sendfile('index.html');
 });
-
-// create web service endpoint for game preferences
-app.get('/gamePrefs', game_prefs);
 
 // go to page for registration
 app.get('/register', go_register);
@@ -63,10 +72,7 @@ app.post('/register', function (req, res, next) {
 //  login
 app.get('/login', go_login);
 
-// edit profile
-app.get('/profile', edit_profile);
-
-
+// connect 
 app.listen(app.get('port'), function () {
     console.log('Now listening for connections on port: ', app.get('port'));
 });
@@ -250,6 +256,10 @@ function get_game_from_db(game, callback) {
 // Registration section----------------------------------------------
 
 function go_register(req, res) {
+    sess = req.session;
+    if (!(sess.gamer)) {
+        sess.gamer = 1;
+    }
     res.render('pages/register.ejs');
 }
 
@@ -300,12 +310,13 @@ function register(params, res, callback) {
 //  Update gaming preferences section------------------------------
 
 function go_preferences(req, res) {
+    sess = req.session;
+    if (!(sess.gamer)) {
+        sess.gamer = 1;
+    }
     res.render('pages/games.ejs');
 }
 
-function game_prefs(req, res) {
-
-}
 
 // Login section----------------------------------------------------
 
@@ -323,11 +334,9 @@ function get_gamer_id(username, callback) {
 }
 
 function go_login(req, res) {
+    sess = req.session;
+    if (!(sess.gamer)) {
+        sess.gamer = 1;
+    }
     res.render('pages/login.ejs');
-}
-
-// Edit Profile section----------------------------------------------
-
-function edit_profile(req, res) {
-    res.render('pages/edit_profile.ejs');
 }

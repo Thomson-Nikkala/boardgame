@@ -155,38 +155,39 @@ function get_game(req, res) {
                 game_min_playtime = parseInt(game_details[2], 10);
                 game_min_playtime = parseInt(game_details[3], 10);
                 game_weight = parseInt(game_details[4], 10);
-                /*
-                                // adjust game score for number of players
-                                if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
-                                    game_score = game_score + 20;
 
-                                };
-                                */
+                // adjust game score for number of players
+                if (game_max_players >= min_players) {
+                    if (game_min_players <= max_players) {
+                        game_score = game_score + 20;
+                    }
+                }
 
                 // adjust game score for playtime
-
                 if (game_max_playtime >= min_playtime) {
                     if (game_min_playtime <= max_playtime) {
                         game_score = game_score + 20;
                     }
                 }
-                /*
-                                // adjust game score for game weight
-                                if ((game_weight > min_weight) AND(game_weight < max_weight)) {
-                                    game_score = game_score + 20;
-                                }
 
-                                if (game_score >= best_game_score) {
-                                    // check if this game has already been recommended to this gamer -- add later
-                                    best_game_score = game_score;
-                                    best_board_game = game;
-                                } */
+                // adjust game score for game weight
+                if (game_weight > min_weight) {
+                    if (game_weight < max_weight) {
+                        game_score = game_score + 20;
+                    }
+                }
+
+                if (game_score >= best_game_score) {
+                    // check if this game has already been recommended to this gamer -- add later
+                    best_game_score = game_score;
+                    best_board_game = game;
+                }
 
             } // end for loop
 
         }
 
-        console.log("Best board game is" + best_board_game);
+        console.log("Best board game is " + best_board_game);
 
         // retrieve best board game from database based on board_game id
         get_game_from_db(best_board_game, function (err2, res3) {

@@ -142,7 +142,7 @@ function get_game(req, res) {
             const game_keys = Object.keys(board_games);
             const game_entries = Object.entries(board_games);
 
-            for (const key of keys) {
+            for (const key of game_keys) {
                 console.log(key);
                 game = obj[key];
                 console.log(game);

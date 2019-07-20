@@ -182,8 +182,8 @@ function get_game(req, res) {
                 console.log("Best board game is" + best_board_game);
 
                 // retrieve best board game from database based on board_game id
-                get_game_from_db(best_board_game, function (err, res) {
-                    if (err || res == null) {
+                get_game_from_db(best_board_game, function (err, result) {
+                    if (result == null) {
                         response.status(500).json({
                             success: false,
                             data: error
@@ -191,7 +191,7 @@ function get_game(req, res) {
                     } else {
                         console.log("Back from the get_game_from_db with result:", res);
                         const params = res[0];
-                        res.render('pages/display_game', params);
+                        result.render('pages/display_game', params);
                     }
                 });
 
@@ -235,7 +235,7 @@ function get_game_from_db(game, callback) {
         }
 
         callback(null, result.rows);
-    })
+    });
 }
 
 

@@ -164,14 +164,15 @@ function get_game(req, res) {
                                 */
 
                 // adjust game score for playtime
-                if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime)))
+                if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime))) {
                     game_score = game_score + 20;
 
+                }
 
                 // adjust game score for game weight
-                if ((game_weight > min_weight) AND(game_weight < max_weight))
+                if ((game_weight > min_weight) AND(game_weight < max_weight)) {
                     game_score = game_score + 20;
-
+                }
 
                 if (game_score >= best_game_score) {
                     // check if this game has already been recommended to this gamer -- add later

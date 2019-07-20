@@ -154,22 +154,22 @@ function get_game(req, res) {
                 game_min_playtime = parseInt(game_details[2], 10);
                 game_min_playtime = parseInt(game_details[3], 10);
                 game_weight = parseInt(game_details[4], 10);
+
+                // adjust game score for number of players
+                if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
+                    game_score = game_score + 20;
+
+                };
                 /*
-                                // adjust game score for number of players
-                                if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
-                                    game_score = game_score + 20;
-
-                                };
-                                /*
-                                                                    // adjust game score for playtime
-                                                                    if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime)))
-                                                                        game_score = game_score + 20;
+                                                    // adjust game score for playtime
+                                                    if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime)))
+                                                        game_score = game_score + 20;
 
 
-                                                                    // adjust game score for game weight
-                                                                    if ((game_weight > min_weight) AND(game_weight < max_weight))
-                                                                        game_score = game_score + 20;
-                                                */
+                                                    // adjust game score for game weight
+                                                    if ((game_weight > min_weight) AND(game_weight < max_weight))
+                                                        game_score = game_score + 20;
+                                */
 
                 if (game_score >= best_game_score) {
                     // check if this game has already been recommended to this gamer -- add later

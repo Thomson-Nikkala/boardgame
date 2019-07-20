@@ -143,14 +143,11 @@ function get_game(req, res) {
             const game_entries = Object.entries(board_games);
 
             for (const [key, game_data] of game_entries) {
-                // console.log(key);
-                //   console.log(game_data);
                 var game_data_values = Object.values(game_data);
                 game = game_data_values[0];
                 game_score = 0;
                 var game_details = Object.values(game_data_values[3]);
                 game_min_players = parseInt(game_details[0], 10);
-                console.log(game_min_players);
                 game_max_players = parseInt(game_details[1], 10);
                 game_min_playtime = parseInt(game_details[2], 10);
                 game_min_playtime = parseInt(game_details[3], 10);
@@ -160,6 +157,7 @@ function get_game(req, res) {
                 if (game_max_players >= min_players) {
                     if (game_min_players <= max_players) {
                         game_score = game_score + 20;
+                        console.log(game_score);
                     }
                 }
 
@@ -167,6 +165,7 @@ function get_game(req, res) {
                 if (game_max_playtime >= min_playtime) {
                     if (game_min_playtime <= max_playtime) {
                         game_score = game_score + 20;
+                        console.log(game_score);
                     }
                 }
 
@@ -174,6 +173,7 @@ function get_game(req, res) {
                 if (game_weight > min_weight) {
                     if (game_weight < max_weight) {
                         game_score = game_score + 20;
+                        console.log(game_score);
                     }
                 }
 

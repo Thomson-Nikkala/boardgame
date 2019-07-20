@@ -148,8 +148,8 @@ function get_game(req, res) {
                 var game_data_values = Object.values(game_data);
                 game = game_data_values[0];
                 game_score = 0;
-
-                var game_details = Object.values(game);
+                console.log(game);
+                /*    var game_details = Object.values(game);
                 console.log(game_details);
                 game_min_players = game_details[1];
                 game_max_players = game_details[1];

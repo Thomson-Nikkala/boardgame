@@ -193,7 +193,7 @@ function get_game(req, res) {
                 } else {
                     console.log("Back from the get_game_from_db with result:", res3);
                     const params = res3[0];
-                    res3.render('pages/display_game', params);
+                    res2.render('pages/display_game', params);
                 }
             });
 

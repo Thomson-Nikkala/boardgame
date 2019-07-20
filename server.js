@@ -13,12 +13,12 @@ const PORT = process.env.PORT || 3000;
 app.use(morgan('dev'));
 
 // initialize body-parser to parse incoming parameters requests to req.body
-app.use(bodyParser.urlencoded({
+app.use(body_parser.urlencoded({
     extended: true
 }));
 
 // initialize cookie-parser to allow us access the cookies stored in the browser. 
-app.use(cookieParser());
+app.use(cookie_parser());
 
 // initialize express-session to allow us track the logged-in user across sessions.
 app.use(session({

@@ -147,10 +147,9 @@ function get_game(req, res) {
                 //   console.log(game_data);
                 var game_data_values = Object.values(game_data);
                 game = game_data_values[0];
-                console.log(game);
                 game_score = 0;
                 game_min_players = game_data_values[1];
-                //     console.log(game_min_players);
+                console.log(game_min_players);
                 game_max_players = game_data_values[2];
                 game_min_playtime = game_data_values[3];
                 game_min_playtime = game_data_values[4];
@@ -179,23 +178,25 @@ function get_game(req, res) {
                          }
                      } // end for loop */
 
-                console.log("Best board game is" + best_board_game);
-
-                // retrieve best board game from database based on board_game id
-                get_game_from_db(best_board_game, function (err2, res3) {
-                    if (res3 == null) {
-                        response.status(500).json({
-                            success: false,
-                            data: error
-                        })
-                    } else {
-                        console.log("Back from the get_game_from_db with result:", res3);
-                        const params = res3[0];
-                        res3.render('pages/display_game', params);
-                    }
-                });
-
             }
+
+            console.log("Best board game is" + best_board_game);
+            // retrieve best board game from database based on board_game id
+
+
+            get_game_from_db(best_board_game, function (err2, res3) {
+                if (res3 == null) {
+                    response.status(500).json({
+                        success: false,
+                        data: error
+                    })
+                } else {
+                    console.log("Back from the get_game_from_db with result:", res3);
+                    const params = res3[0];
+                    res3.render('pages/display_game', params);
+                }
+            });
+
         }
     });
 

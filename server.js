@@ -129,79 +129,79 @@ function get_game(req, res) {
 
     // handler
     get_all_games(function (err, res2) {
-            // this is the callback function to return the information
-            if (err || res2 == null) {
+        // this is the callback function to return the information
+        if (err || res2 == null) {
+            response.status(500).json({
+                success: false,
+                data: error
+            });
+        } else {
+            const board_games = res2; // Javascript object
+            // calculate best board game
+
+            const game_keys = Object.keys(board_games);
+            const game_entries = Object.entries(board_games);
+
+            for (const [key, game_data] of game_entries) {
+                // console.log(key);
+                //   console.log(game_data);
+                var game_data_values = Object.values(game_data);
+                game = game_data_values[0];
+                game_score = 0;
+                // one is board game name
+                game_min_players = game_data_values[2];
+                console.log(game_min_players);
+                game_max_players = game_data_values[3];
+                console.log(game_max_players);
+                game_min_playtime = game_data_values[4];
+                game_min_playtime = game_data_values[5];
+                game_min_weight = game_data_values[6];
+                game_min_weight = game_data_values[7];
+                /*
+                                    // adjust game score for number of players
+                                    if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
+                                        game_score = game_score + 20;
+
+                                    };
+
+                                    // adjust game score for playtime
+                                    if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime)))
+                                        game_score = game_score + 20;
+
+
+                                    // adjust game score for game weight
+                                    if ((game_weight > $min_weight) AND(game_weight < max_weight))
+                                        game_score = game_score + 20;
+                */
+
+                if (game_score >= best_game_score) {
+                    // check if this game has already been recommended to this gamer -- add later
+                    best_game_score = game_score;
+                    best_board_game = game;
+                }
+
+            } // end for loop
+
+        }
+
+        console.log("Best board game is" + best_board_game);
+
+        // retrieve best board game from database based on board_game id
+        get_game_from_db(best_board_game, function (err2, res3) {
+            if (res3 == null) {
                 response.status(500).json({
                     success: false,
                     data: error
-                });
+                })
             } else {
-                const board_games = res2; // Javascript object
-                // calculate best board game
-
-                const game_keys = Object.keys(board_games);
-                const game_entries = Object.entries(board_games);
-
-                for (const [key, game_data] of game_entries) {
-                    // console.log(key);
-                    //   console.log(game_data);
-                    var game_data_values = Object.values(game_data);
-                    game = game_data_values[0];
-                    game_score = 0;
-                    // one is board game name
-                    game_min_players = game_data_values[2];
-                    console.log(game_min_players);
-                    game_max_players = game_data_values[3];
-                    console.log(game_max_players);
-                    game_min_playtime = game_data_values[4];
-                    game_min_playtime = game_data_values[5];
-                    game_min_weight = game_data_values[6];
-                    game_min_weight = game_data_values[7];
-                    /*
-                                        // adjust game score for number of players
-                                        if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
-                                            game_score = game_score + 20;
-
-                                        };
-                                        /*
-                                                          // adjust game score for playtime
-                                                          if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime)))
-                                                              game_score = game_score + 20;
-
-
-                                                          // adjust game score for game weight
-                                                          if ((game_weight > $min_weight) AND(game_weight < max_weight))
-                                                              game_score = game_score + 20;
-
-
-                                                          if (game_score >= best_game_score) {
-                                                              // check if this game has already been recommended to this gamer -- add later
-                                                              best_game_score = game_score;
-                                                              best_board_game = game;
-                                                          }  */
-
-                } // end for loop
-
+                console.log("Back from the get_game_from_db with result:", res3);
+                const params = res3[0];
+                res.render("pages/display_game", params);
             }
+        });
 
-            console.log("Best board game is" + best_board_game);
+    }); // end of get all games
 
-            // retrieve best board game from database based on board_game id
-            get_game_from_db(best_board_game, function (err2, res3) {
-                if (res3 == null) {
-                    response.status(500).json({
-                        success: false,
-                        data: error
-                    })
-                } else {
-                    console.log("Back from the get_game_from_db with result:", res3);
-                    const params = res3[0];
-                    res.render("pages/display_game", params);
-                }
-            });
-
-        }
-    });
 
 } // end of get_game
 

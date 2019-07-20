@@ -108,7 +108,7 @@ Functions (should put in separate file later)
 
 // Get board game recommendation section---------------------------
 
-// main function to get the best board game for the user based on preferences
+// main function to get the best board game
 function get_game(req, res) {
 
     var min_players = req.min_players;
@@ -127,7 +127,7 @@ function get_game(req, res) {
     var game_max_weight = 0;
     var game_score = 0;
 
-    // handler to get all board game information and provide a callback when its done
+    // handler
     get_all_games(function (err, res2) {
             // this is the callback function to return the information
             if (err || res2 == null) {
@@ -157,26 +157,28 @@ function get_game(req, res) {
                     game_min_weight = game_data_values[7];
 
                     // adjust game score for number of players
-                    if (!((game_max_players < min_players) OR(game_min_players > max_players)))
+                    if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
                         game_score = game_score + 20;
 
-
-                    // adjust game score for playtime
-                    if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime)))
-                        game_score = game_score + 20;
-
-
-                    // adjust game score for game weight
-                    if ((game_weight > $min_weight) AND(game_weight < max_weight))
-                        game_score = game_score + 20;
+                    };
+                    /*
+                                      // adjust game score for playtime
+                                      if (!((game_max_playtime < min_playtime) OR(game_min_playtime > max_playtime)))
+                                          game_score = game_score + 20;
 
 
-                    if (game_score >= best_game_score)
-                        // check if this game has already been recommended to this gamer -- add later
-                        best_game_score = game_score;
-                    best_board_game = game;
+                                      // adjust game score for game weight
+                                      if ((game_weight > $min_weight) AND(game_weight < max_weight))
+                                          game_score = game_score + 20;
 
-                } // end for loop 
+
+                                      if (game_score >= best_game_score) {
+                                          // check if this game has already been recommended to this gamer -- add later
+                                          best_game_score = game_score;
+                                          best_board_game = game;
+                                      }  */
+
+                } // end for loop
 
             }
 
@@ -192,7 +194,7 @@ function get_game(req, res) {
                 } else {
                     console.log("Back from the get_game_from_db with result:", res3);
                     const params = res3[0];
-                    res.render('pages/display_game', params);
+                    res.render("pages/display_game", params);
                 }
             });
 

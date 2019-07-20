@@ -145,20 +145,19 @@ function get_game(req, res) {
             for (const [key, game_data] of game_entries) {
                 // console.log(key);
                 //   console.log(game_data);
-                var game_data_array = Object.keys(game_data);
-                console.log(game_data_array[0]);
-                /* game = obj[key];
-                 console.log(game);
-                 /*      game_score = 0;
-                         game_min_players = entries[min_players];
-                         console.log(game_min_players);
-                         game_max_players = entries[max_players];
-                         game_min_playtime = entries[min_playtime];
-                         game_min_playtime = entries[max_playtime];
-                         game_min_weight = entries[min_weight];
-                         game_min_weight = entries[max_weight];
+                var game_data_values = Object.values(game_data);
+                game = game_data_array[0];
+                console.log(game);
+                game_score = 0;
+                game_min_players = game_data_array[1];
+                //     console.log(game_min_players);
+                game_max_players = game_data_array[2];
+                game_min_playtime = game_data_array[3];
+                game_min_playtime = game_data_array[4];
+                game_min_weight = game_data_array[5];
+                game_min_weight = game_data_array[6];
 
-                         /* adjust game score for number of players
+                /* adjust game score for number of players
                  if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
                      game_score = game_score + 20;
                  }

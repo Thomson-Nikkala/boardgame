@@ -148,6 +148,7 @@ function get_game(req, res) {
                     var game_data_values = Object.values(game_data);
                     game = game_data_values[0];
                     game_score = 0;
+                    // one is board game name
                     game_min_players = game_data_values[2];
                     console.log(game_min_players);
                     game_max_players = game_data_values[3];

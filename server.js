@@ -114,6 +114,7 @@ function get_game(req, res) {
     var min_players = req.min_players;
     var max_players = req.max_players;
     var min_playtime = req.min_playtime;
+    var max_playtime = req.max_playtime;
     var min_weight = req.min_weight;
     var max_weight = req.max_weight;
     var best_game_score = 0;
@@ -123,8 +124,7 @@ function get_game(req, res) {
     var game_max_players = 0;
     var game_min_playtime = 0;
     var game_max_playtime = 0;
-    var game_min_weight = 0;
-    var game_max_weight = 0;
+    var game_weight = 0;
     var game_score = 0;
 
     // handler
@@ -157,8 +157,7 @@ function get_game(req, res) {
                 game_weight = parseInt(game_details[4], 10);
 
                 // adjust game score for number of players
-                if (!((game_max_players < min_players))) //OR(game_min_players > max_players))) 
-                {
+                if (!((game_max_players < min_players) OR(game_min_players > max_players))) {
                     game_score = game_score + 20;
 
                 };

@@ -150,6 +150,7 @@ function get_game(req, res) {
                 game_score = 0;
                 var game_details = Object.values(game_data_values[3]);
                 game_min_players = parseInt(game_details[0], 10);
+                console.log(game_min_players);
                 game_max_players = parseInt(game_details[1], 10);
                 game_min_playtime = parseInt(game_details[2], 10);
                 game_min_playtime = parseInt(game_details[3], 10);

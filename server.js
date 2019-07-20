@@ -128,15 +128,15 @@ function get_game(req, res) {
     var game_score = 0;
 
     // handler to get all board game information and provide a callback when its done
-    get_all_games(function (err, res) {
+    get_all_games(function (err, res2) {
         // this is the callback function to return the information
-        if (err || res == null) {
+        if (err || res2 == null) {
             response.status(500).json({
                 success: false,
                 data: error
             });
         } else {
-            const board_games = res; // Javascript object
+            const board_games = res2; // Javascript object
             // calculate best board game
 
             const game_keys = Object.keys(board_games);
@@ -182,16 +182,16 @@ function get_game(req, res) {
                 console.log("Best board game is" + best_board_game);
 
                 // retrieve best board game from database based on board_game id
-                get_game_from_db(best_board_game, function (err, result) {
-                    if (result == null) {
+                get_game_from_db(best_board_game, function (err2, res3) {
+                    if (res3 == null) {
                         response.status(500).json({
                             success: false,
                             data: error
                         })
                     } else {
-                        console.log("Back from the get_game_from_db with result:", res);
-                        const params = res[0];
-                        result.render('pages/display_game', params);
+                        console.log("Back from the get_game_from_db with result:", res3);
+                        const params = res3[0];
+                        res3.render('pages/display_game', params);
                     }
                 });
 

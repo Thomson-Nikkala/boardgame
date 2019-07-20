@@ -149,9 +149,9 @@ function get_game(req, res) {
                 game = game_data_values[0];
                 game_score = 0;
                 console.log(game_data_values);
-                /*    var game_details = Object.values(game);
+                var game_details = Object.values(game_data_values[3]);
                 console.log(game_details);
-                game_min_players = game_details[1];
+                /*         game_min_players = game_details[1];
                 game_max_players = game_details[1];
                 game_min_playtime = game_details[1];
                 game_min_playtime = game_details[1];

@@ -142,12 +142,11 @@ function get_game(req, res) {
             const game_keys = Object.keys(board_games);
             const game_entries = Object.entries(board_games);
 
-            console.log(game_keys);
-            console.log(game_entries);
-
-            /*    game_keys.forEach(function(key)) {
-                    game = entries[board_game];
-                    game_score = 0;
+            for (const key of keys)) {
+            console.log(key);
+            game = obj[key];
+            console.log(game);
+            /*      game_score = 0;
                     game_min_players = entries[min_players];
                     console.log(game_min_players);
                     game_max_players = entries[max_players];

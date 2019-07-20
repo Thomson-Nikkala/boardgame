@@ -146,7 +146,7 @@ function get_game(req, res) {
                 // console.log(key);
                 //   console.log(game_data);
                 var game_data_array = Object.entries(game_data);
-                console.log(game_data_array['board_game']);
+                console.log(game_data_array[0]);
                 /* game = obj[key];
                  console.log(game);
                  /*      game_score = 0;

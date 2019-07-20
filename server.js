@@ -178,7 +178,6 @@ function get_game(req, res) {
                     // check if this game has already been recommended to this gamer -- add later
                     best_game_score = game_score;
                     best_board_game = game;
-                    console.log(best_game_score);
                 }
 
             } // end for loop

@@ -148,17 +148,19 @@ function get_game(req, res) {
                 var game_data_values = Object.values(game_data);
                 game = game_data_values[0];
                 game_score = 0;
-                // one is board game name
-                game_min_players = game_data_values[2];
-                console.log(game_data_values);
+                
+                var game_details = Object.values(game);
+                
+                game_min_players = game_details[1];
+                console.log(game_min_players);
 
-                game_max_players = game_data_values[3];
-                game_min_playtime = game_data_values[4];
-                game_min_playtime = game_data_values[5];
-                game_min_weight = game_data_values[6];
-                game_min_weight = game_data_values[7];
+                game_max_players = game_details[1];
+                game_min_playtime = game_details[1];
+                game_min_playtime = game_details[1];
+                game_min_weight = game_details[1];
+                game_min_weight = game_details[1];
                 /*            
-                                    // adjust game score for number of players
+        // adjust game score for number of players
                                     if (!((parseInt(game_max_players < min_players) OR(game_min_players > max_players))) {
                                         game_score = game_score + 20;
 

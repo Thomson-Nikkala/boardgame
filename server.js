@@ -157,7 +157,6 @@ function get_game(req, res) {
                 if (game_max_players >= min_players) {
                     if (game_min_players <= max_players) {
                         game_score = game_score + 20;
-                        console.log(game_score);
                     }
                 }
 
@@ -165,7 +164,6 @@ function get_game(req, res) {
                 if (game_max_playtime >= min_playtime) {
                     if (game_min_playtime <= max_playtime) {
                         game_score = game_score + 20;
-                        console.log(game_score);
                     }
                 }
 
@@ -173,7 +171,6 @@ function get_game(req, res) {
                 if (game_weight > min_weight) {
                     if (game_weight < max_weight) {
                         game_score = game_score + 20;
-                        console.log(game_score);
                     }
                 }
 
@@ -181,6 +178,7 @@ function get_game(req, res) {
                     // check if this game has already been recommended to this gamer -- add later
                     best_game_score = game_score;
                     best_board_game = game;
+                    console.log(best_game_score);
                 }
 
             } // end for loop

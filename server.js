@@ -150,7 +150,8 @@ function get_game(req, res) {
                 game_score = 0;
                 // one is board game name
                 game_min_players = game_data_values[2];
-                console.log(game_min_players);
+                console.log(game_data_values);
+
                 game_max_players = game_data_values[3];
                 game_min_playtime = game_data_values[4];
                 game_min_playtime = game_data_values[5];

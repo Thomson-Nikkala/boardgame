@@ -65,11 +65,19 @@ app.get('/games', go_preferences);
 
 // get game recommendation web service endpoint
 app.post('/games', function (req, res, next) {
+    sess = req.session;
+    if (!(sess.gamer)) {
+        sess.gamer = 1;
+    }
     get_game(req.body, res);
 });
 
 // process form for registration
 app.post('/register', function (req, res, next) {
+    sess = req.session;
+    if (!(sess.gamer)) {
+        sess.gamer = 1;
+    }
     register(req.body, res);
 });
 

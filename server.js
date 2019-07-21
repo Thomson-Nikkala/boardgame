@@ -397,7 +397,8 @@ function login(params, res, callback) {
                     sess.gamer = new_gamer;
                     res.redirect('/gamer');
                 } else {
-                    res.redirect('login')
+                    $("#status").text("Unknown username or password.");
+                    res.redirect('login');
                 }
             }
         })

@@ -1,4 +1,5 @@
 function login() {
+    console.log("IN LOGIN");
     var username1 = $("#username").val();
     var password1 = $("#password").val();
     const salt_rounds = 12;

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+This is the login page for the Board Game Whisperer
+Author: Nikkala Thomson
+-->
+
+<html lang="en-us">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="styles/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/main_style.css" />
+    <meta charset="UTF-8">
+    <meta name="author" content="Nikkala Thomson">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="pinterest" content="nopin">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+    <title>The Board Game Whisperer | Login</title>
+</head>
+
+<body>
+    <header>
+        <div id="header-band"></div>
+        <div id="header-text" class="center-block">
+            <h1>The Board Game Whisperer</h1>
+        </div>
+    </header>
+    <div class=center-block>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li id="active-nav"><a href="/login">Login<img src="../images/yellow-arrow.png" alt=""></a></li>
+                <li><a href="/register">Register</a></li>
+
+                <li><a href="/games">Get Games</a></li>
+            </ul>
+        </nav>
+        <main>
+
+
+            <section class="wide-section">
+                <div id="message">Unknown username or password.</div><br>
+                <form id="myForm" action="login" method="post">
+                    <label for="username" class="label_long"><b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" id="username" required /><br>
+                    <label for="password" class="label_long"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" id="password" required /><br>
+                    <button type="submit" class="submit_btn">LOGIN</button>
+                </form>
+            </section>
+        </main>
+        <footer>
+            <div class="center-block">
+                <hr>
+            </div>
+            <div class="center-block">
+                <ul>
+                    <li>Copyright &copy; 2019 </li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

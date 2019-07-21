@@ -322,14 +322,21 @@ function go_preferences(req, res) {
             console.log(err);
         } else {
             console.log(result.rows[0].preferences.min_players);
-            var min_players = 0;
-            var max_players = 0;
-            var min_playtime = 0;
-            var max_playtime = 0;
-            var min_weight = 0;
-            var max_weight = 0;
+            var min_players = result.rows[0].preferences.min_players;
+            var max_players = result.rows[0].preferences.max_players;
+            var min_playtime = result.rows[0].preferences.min_playtime;
+            var max_playtime = result.rows[0].preferences.max_playtime;
+            var min_weight = result.rows[0].preferences.min_weight;
+            var max_weight = result.rows[0].preferences.max_weight;
 
-            res.render('pages/games.ejs');
+            res.render('pages/games.ejs', {
+                min_pl: min_players,
+                max_pl: max_players,
+                min_ply: min_playtime,
+                max_ply: max_playtime,
+                min_w: min_weight,
+                max_w: max_weight
+            });
         }
 
     });

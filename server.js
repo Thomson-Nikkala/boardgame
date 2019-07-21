@@ -8,9 +8,12 @@ const bcrypt = require('bcrypt');
 const PORT = process.env.PORT || 3000;
 
 app.use(session({
-    secret: 'ssshhhhh',
-    saveUninitialized: true,
-    resave: true
+    store: new(require('connect-pg-simple')(session))(),
+    secret: process.env.FOO_COOKIE_SECRET,
+    resave: false,
+    cookie: {
+        maxAge: 30 * 24 * 60 * 60 * 1000
+    } // 30 days
 }));
 
 var sess;
@@ -281,7 +284,7 @@ function register(params, res, callback) {
         })
     });
     // get gamer's gamer id number
-    console.log('HERE');
+
     var gamer_id = function (req, res) {
         get_gamer_id(username, function (err, rows) {
             if (err)

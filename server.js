@@ -321,7 +321,7 @@ function go_preferences(req, res) {
             console.log("An error with the DB occurred in go_preferences.");
             console.log(err);
         } else {
-            console.log(result[0].preferences.min_players);
+            console.log(result.rows[0].preferences.min_players);
             var min_players = 0;
             var max_players = 0;
             var min_playtime = 0;

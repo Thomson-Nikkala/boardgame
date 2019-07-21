@@ -69,13 +69,13 @@ for ( var i = 0; i < options2.length; i++ )
 %>
                         </select></p>
 
-                    <p>Maximum playtime:
+                    <p>Minimum playtime:
                         <select name="min_playtime" id="min_playtime">
                             <%
 var options3 = [ "1", "15", "30", "45", "60", "90", "120", "150", "180", "210", "240", "300"];
 for ( var i = 0; i < options3.length; i++ )
 {
-    var selected = ( min_ply == options3[i]) ? "selected" : "";
+    var selected = ( toString(min_ply) == options3[i]) ? "selected" : "";
     %><option value="<%=options3[ i ] %>" <%=selected %>><%=i %></option><%
 }
 %>

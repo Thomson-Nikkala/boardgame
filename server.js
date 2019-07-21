@@ -76,6 +76,8 @@ app.post('/register', function (req, res, next) {
 //  login
 app.get('/login', go_login);
 
+app.get('/login/err', go_login_err);
+
 app.post('/login', function (req, res, next) {
     login(req.body, res);
 });
@@ -372,6 +374,13 @@ function go_login(req, res) {
     res.render('pages/login.ejs');
 }
 
+function go_login_err(req, res) {
+    sess = req.session;
+    if (!(sess.gamer)) {
+        sess.gamer = 1;
+    }
+    res.render('pages/login_err.ejs');
+}
 
 function login(params, res, callback) {
     console.log("IN LOGIN");
@@ -397,8 +406,7 @@ function login(params, res, callback) {
                     sess.gamer = new_gamer;
                     res.redirect('/gamer');
                 } else {
-                    $("#status").text("Unknown username or password.");
-                    res.redirect('login');
+                    res.redirect('/login/err');
                 }
             }
         })

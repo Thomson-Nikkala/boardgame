@@ -312,7 +312,7 @@ function register(params, res, callback) {
             console.log(err);
             callback(err, null);
         }
-    })
+    });
 
     res.redirect('/'); // gamePrefs later
 }

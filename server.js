@@ -314,7 +314,7 @@ function go_preferences(req, res) {
     if (!(sess.gamer)) {
         sess.gamer = 1;
     }
-    var param = sess.gamer;
+    var param = [sess.gamer];
     var sql = "SELECT * from gamer WHERE gamer = $1";
     pool.query(sql, param, function (err, result) {
         if (err) {

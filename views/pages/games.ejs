@@ -51,25 +51,24 @@ Author: Nikkala Thomson
 var options = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 for ( var i = 0; i < options.length; i++ )
 {
-    var selected = ( "3" ) ? "selected" : "";
+    var selected = ( min_pl == i) ? "selected" : "";
     %><option value="<%=options[ i ] %>" <%=selected %>><%=i %></option><%
 }
 %>
                         </select></p>
 
-
-                    <p>Maximum number of players: <select name="max_players">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4" selected>4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
+                    <p>Maximum number of players:
+                        <select name="min_players" id="min_players">
+                            <%
+var options = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+for ( var i = 0; i < options.length; i++ )
+{
+    var selected = ( max_pl == i) ? "selected" : "";
+    %><option value="<%=options[ i ] %>" <%=selected %>><%=i %></option><%
+}
+%>
                         </select></p>
+
 
                     <p>Minimum playing time (in minutes): <select name="min_playtime">
                             <option value="1">1</option>

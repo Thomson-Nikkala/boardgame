@@ -52,7 +52,7 @@ var options = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 for ( var i = 1; i <= options.length; i++ )
 {
     var selected = ( min_pl == i) ? "selected" : "";
-    %><option value="<%=options[ i ] %>" <%=selected %>><%=i %></option><%
+    %><option value="<%=options[ i ] %>" <%=selected %>><%=options[i] %></option><%
 }
 %>
                         </select></p>
@@ -64,7 +64,7 @@ var options2 = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 for ( var i = 1; i <= options2.length; i++ )
 {
     var selected = ( max_pl == i) ? "selected" : "";
-    %><option value="<%=options2[ i ] %>" <%=selected %>><%=i %></option><%
+    %><option value="<%=options2[ i ] %>" <%=selected %>><%=options2[i] %></option><%
 }
 %>
                         </select></p>

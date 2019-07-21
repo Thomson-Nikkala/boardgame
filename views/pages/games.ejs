@@ -83,11 +83,11 @@ for ( var i = 0; i < options3.length; i++ )
                     <p>Maximum playtime:
                         <select name="max_playtime" id="max_playtime">
                             <%
-var options = [ "15", "30", "45", "60", "90", "120", "150", "180", "210", "240", "300", "360"];
-for ( var i = 0; i < options.length; i++ )
+var options4 = [ "15", "30", "45", "60", "90", "120", "150", "180", "210", "240", "300", "360"];
+for ( var i = 0; i < options4.length; i++ )
 {
-    var selected = ( max_ply == options[i]) ? "selected" : "";
-    %><option value="<%=options[ i ] %>" <%=selected %>><%=i %></option><%
+    var selected = ( max_ply == options4[i]) ? "selected" : "";
+    %><option value=<%=options4[ i ] %> <%=selected %>><%= options4[i]%> </option><%
 }
 %>
                         </select></p>
@@ -96,11 +96,11 @@ for ( var i = 0; i < options.length; i++ )
                     <p>Minimum game weight:
                         <select name="min_weight" id="min_weight">
                             <%
-var options = [ "1.0", "1.5", "2.0", "2.5", "3.0", "3.5", "4.0", "4.5"];
-for ( var i = 0; i < options.length; i++ )
+var options5 = [ "1.0", "1.5", "2.0", "2.5", "3.0", "3.5", "4.0", "4.5"];
+for ( var i = 0; i < options5.length; i++ )
 {
-    var selected = ( min_w == options[i]) ? "selected" : "";
-    %><option value="<%=options[ i ] %>" <%=selected %>><%=i %></option><%
+    var selected = ( min_w == options5[i]) ? "selected" : "";
+    %><option value=<%=options5[i] %> <%=selected %>><%=options5[i] %></option><%
 }
 %>
                         </select></p>

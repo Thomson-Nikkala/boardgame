@@ -397,9 +397,9 @@ function login(params, res, callback) {
                     sess.gamer = new_gamer;
                     result.redirect('/gamer');
                 } else {
-                    result.redirect('login')
+                    res.redirect('login')
                 }
-                result.redirect('/gamer');
+                res.redirect('/gamer');
             }
         })
 

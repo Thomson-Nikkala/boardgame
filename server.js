@@ -395,11 +395,10 @@ function login(params, res, callback) {
                 console.log(new_gamer);
                 if (new_gamer) {
                     sess.gamer = new_gamer;
-                    result.redirect('/gamer');
+                    res.redirect('/gamer');
                 } else {
                     res.redirect('login')
                 }
-                res.redirect('/gamer');
             }
         })
 

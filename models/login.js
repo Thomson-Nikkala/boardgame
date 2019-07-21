@@ -1,7 +1,9 @@
-function login() {
+function login(params, res, callback) {
     console.log("IN LOGIN");
-    var username1 = $("#username").val();
-    var password1 = $("#password").val();
+    //var username1 = $("#username").val();
+    // var password1 = $("#password").val();
+    var username1 = params.username;
+    var password1 = params.password;
     const salt_rounds = 12;
     var new_gamer = 0;
     bcrypt.hash(password1, salt_rounds, function (err, hash) {
@@ -18,18 +20,16 @@ function login() {
                 console.log(new_gamer);
                 if (new_gamer) {
                     sess.gamer = new_gamer;
+                    result.redirect('/gamer');
+                } else {
+                    result.redirect('login')
                 }
+                result.redirect('/gamer');
             }
         })
 
 
     });
-
-
-    var params = {
-        username: username,
-        password: password
-    };
 
 
 }

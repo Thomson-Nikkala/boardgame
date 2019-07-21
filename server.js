@@ -76,6 +76,10 @@ app.post('/register', function (req, res, next) {
 //  login
 app.get('/login', go_login);
 
+app.post('/login', function (req, res, next) {
+    login(req.body, res);
+});
+
 // connect 
 app.listen(app.get('port'), function () {
     console.log('Now listening for connections on port: ', app.get('port'));
@@ -366,13 +370,4 @@ function go_login(req, res) {
         sess.gamer = 1;
     }
     res.render('pages/login.ejs');
-}
-
-function decrypt(text) {
-    let iv = Buffer.from(text.iv, 'hex');
-    let encryptedText = Buffer.from(text.encryptedData, 'hex');
-    let decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key), iv);
-    let decrypted = decipher.update(encryptedText);
-    decrypted = Buffer.concat([decrypted, decipher.final()]);
-    return decrypted.toString();
 }

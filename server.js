@@ -144,7 +144,7 @@ function get_game(req, res) {
     var game_max_playtime = 0;
     var game_weight = 0;
     var game_score = 0;
-
+    console.log(min_players);
     // save user preferences if not logged in as "guest"
     var prefs_json = '{"min_players":' + min_players + ',"max_players":' + max_players + ',"min_playtime":' + min_playtime + ', "max_playtime":' + max_playtime + ', "min_weight":' + min_weight + ', "max_weight":' +
         max_weight + ', "themes":[], "mechanisms":[]}';

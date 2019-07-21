@@ -208,7 +208,7 @@ function get_game(req, res) {
             }
         });
 
-    }); // end of get all games
+    });
 
 
 } // end of get_game
@@ -314,29 +314,41 @@ function go_preferences(req, res) {
     if (!(sess.gamer)) {
         sess.gamer = 1;
     }
-    res.render('pages/games.ejs');
-}
+    var param = sess.gamer;
+    var sql = "SELECT * from gamer WHERE gamer = $1";
+    pool.query(sql, param, function (err, result) {
+                if (err) {
+                    console.log("An error with the DB occurred in go_preferences.");
+                    console.log(err);
+                } else {
+                    console.log(result);
 
 
-// Login section----------------------------------------------------
+                    res.render('pages/games.ejs');
+                }
 
-function get_gamer_id(username, callback) {
-    var sql = "SELECT gamer FROM gamer WHERE username = $1";
-    var params = [username];
-    pool.query(sql, params, function (err, result) {
-        if (err) {
-            console.log("An error with the DB occurred in get_gamer_id.");
-            console.log(err);
-            callback(err, null);
-        }
-        callback(null, result.rows);
-    })
-}
+            }
 
-function go_login(req, res) {
-    sess = req.session;
-    if (!(sess.gamer)) {
-        sess.gamer = 1;
-    }
-    res.render('pages/login.ejs');
-}
+
+            // Login section----------------------------------------------------
+
+            function get_gamer_id(username, callback) {
+                var sql = "SELECT gamer FROM gamer WHERE username = $1";
+                var param = [username];
+                pool.query(sql, param, function (err, result) {
+                    if (err) {
+                        console.log("An error with the DB occurred in get_gamer_id.");
+                        console.log(err);
+                        callback(err, null);
+                    }
+                    callback(null, result.rows);
+                })
+            }
+
+            function go_login(req, res) {
+                sess = req.session;
+                if (!(sess.gamer)) {
+                    sess.gamer = 1;
+                }
+                res.render('pages/login.ejs');
+            }

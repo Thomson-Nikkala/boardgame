@@ -150,7 +150,7 @@ function get_game(req, res) {
         max_weight + ', "themes":[], "mechanisms":[]}';
 
     var sql = "UPDATE preference SET preferences = $1 WHERE gamer = $2";
-    pool.query(sql, [sess.gamer, prefs_json], function callback(err, result) {
+    pool.query(sql, [prefs_json, sess.gamer], function callback(err, result) {
         if (err) {
             console.log("An error with the DB occurred in get_game preference save.");
             console.log(err);

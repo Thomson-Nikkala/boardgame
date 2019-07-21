@@ -51,7 +51,7 @@ Author: Nikkala Thomson
 var options = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 for ( var i = 0; i < options.length; i++ )
 {
-    var selected = ( min_pl == i) ? "selected" : "";
+    var selected = ( min_pl == options[i]) ? "selected" : "";
     %><option value="<%=options[ i ] %>" <%=selected %>><%=i %></option><%
 }
 %>
@@ -63,7 +63,7 @@ for ( var i = 0; i < options.length; i++ )
 var options = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 for ( var i = 0; i < options.length; i++ )
 {
-    var selected = ( max_pl == i) ? "selected" : "";
+    var selected = ( max_pl == options[i]) ? "selected" : "";
     %><option value="<%=options[ i ] %>" <%=selected %>><%=i %></option><%
 }
 %>
@@ -75,7 +75,7 @@ for ( var i = 0; i < options.length; i++ )
 var options = [ "1", "15", "30", "45", "60", "90", "120", "150", "180", "210", "240", "300"];
 for ( var i = 0; i < options.length; i++ )
 {
-    var selected = ( min_ply == i) ? "selected" : "";
+    var selected = ( min_ply == options[i]) ? "selected" : "";
     %><option value="<%=options[ i ] %>" <%=selected %>><%=i %></option><%
 }
 %>
@@ -87,7 +87,7 @@ for ( var i = 0; i < options.length; i++ )
 var options = [ "15", "30", "45", "60", "90", "120", "150", "180", "210", "240", "300", "360"];
 for ( var i = 0; i < options.length; i++ )
 {
-    var selected = ( max_ply == i) ? "selected" : "";
+    var selected = ( max_ply == options[i]) ? "selected" : "";
     %><option value="<%=options[ i ] %>" <%=selected %>><%=i %></option><%
 }
 %>
@@ -100,7 +100,7 @@ for ( var i = 0; i < options.length; i++ )
 var options = [ "1.0", "1.5", "2.0", "2.5", "3.0", "3.5", "4.0", "4.5"];
 for ( var i = 0; i < options.length; i++ )
 {
-    var selected = ( min_w == i) ? "selected" : "";
+    var selected = ( min_w == options[i]) ? "selected" : "";
     %><option value="<%=options[ i ] %>" <%=selected %>><%=i %></option><%
 }
 %>
@@ -112,7 +112,7 @@ for ( var i = 0; i < options.length; i++ )
 var options = ["1.5", "2.0", "2.5", "3.0", "3.5", "4.0", "4.5", "5.0"];
 for ( var i = 0; i < options.length; i++ )
 {
-    var selected = ( max_w == i) ? "selected" : "";
+    var selected = ( max_w == options[i]) ? "selected" : "";
     %><option value="<%=options[ i ] %>" <%=selected %>><%=i %></option><%
 }
 %>

@@ -148,7 +148,7 @@ function get_game(req, res) {
     // save user preferences if not logged in as "guest"
     var prefs_json = '{"min_players":' + min_players + ',"max_players":' + max_players + ',"min_playtime":' + min_playtime + ', "max_playtime":' + max_playtime + ', "min_weight":' + min_weight + ', "max_weight":' +
         max_weight + ', "themes":[], "mechanisms":[]}';
-
+    console.log(prefs_json);
     var sql = "UPDATE preference SET preferences = $1 WHERE gamer = $2";
     pool.query(sql, [prefs_json, sess.gamer], function callback(err, result) {
         if (err) {

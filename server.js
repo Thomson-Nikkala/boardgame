@@ -243,36 +243,36 @@ function get_game(req, res) {
                         best_board_game = game;
                         console.log("best_board_game" + best_board_game);
                     }
+                }
 
+            } // end for loop
 
-                } // end for loop
-
-                // retrieve best board game from database based on board_game id
-                get_game_from_db(best_board_game, function (err2, res3) {
-                    if (res3 == null) {
-                        response.status(500).json({
-                            success: false,
-                            data: error
-                        })
-                    } else {
-                        console.log("Back from the get_game_from_db with result:", res3);
-                        const the_game = res3[0];
-                        if (sess.gamer !== 1) {
-                            sql = "INSERT INTO recommendation (gamer, board_game) VALUES ($1, $2);";
-                            pool.query(sql, [sess.gamer, the_game], function callback(err, result) {
-                                if (err) {
-                                    console.log("An error with the DB occurred in add game to recommendation.");
-                                    console.log(err);
-                                    callback(err, null);
-                                }
-                            });
-                        }
-
-                        res.render("pages/display_game", the_game);
+            // retrieve best board game from database based on board_game id
+            get_game_from_db(best_board_game, function (err2, res3) {
+                if (res3 == null) {
+                    response.status(500).json({
+                        success: false,
+                        data: error
+                    })
+                } else {
+                    console.log("Back from the get_game_from_db with result:", res3);
+                    const the_game = res3[0];
+                    if (sess.gamer !== 1) {
+                        sql = "INSERT INTO recommendation (gamer, board_game) VALUES ($1, $2);";
+                        pool.query(sql, [sess.gamer, the_game], function callback(err, result) {
+                            if (err) {
+                                console.log("An error with the DB occurred in add game to recommendation.");
+                                console.log(err);
+                                callback(err, null);
+                            }
+                        });
                     }
-                });
 
-            } // end of for loop
+                    res.render("pages/display_game", the_game);
+                }
+            });
+
+
         }
     });
 

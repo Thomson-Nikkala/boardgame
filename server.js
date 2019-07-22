@@ -345,6 +345,7 @@ function register(params, res, callback) {
     var email = params.r_email;
     var password = params.r_password;
     const salt_rounds = 12;
+    var gamer_id = 0;
     //  create gamer
     bcrypt.hash(password, salt_rounds, function (err, hash) {
         var sql = "INSERT INTO gamer (username, display_name, email, hashed_password) VALUES ($1, $2, $3, $4);";
@@ -362,7 +363,7 @@ function register(params, res, callback) {
         if (err) {
             return next(err);
         } else {
-            const gamer_id = res2;
+            gamer_id = res2.rows[0];
             console.log("gamer_id" + gamer_id);
         }
     });

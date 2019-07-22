@@ -237,15 +237,15 @@ function get_game(req, res) {
                         }
 
                     });
-
-                    if (recommended == 1) {
+                    // if not already recommended, update best board game
+                    if (recommended == 0) {
                         best_game_score = game_score;
                         best_board_game = game;
-                    } // end for loop
+                        console.log("best_board_game" + best_board_game);
+                    }
 
-                }
 
-                console.log("Best board game is " + best_board_game);
+                } // end for loop
 
                 // retrieve best board game from database based on board_game id
                 get_game_from_db(best_board_game, function (err2, res3) {
@@ -284,7 +284,7 @@ function get_all_recommendations(callback) {
     recommendation = 0;
     pool.query(sql2, function (err, result) {
         if (err) {
-            console.log("An error with the DB occurred in checking if game recommended.");
+            console.log("An error with the DB occurred in get_all_recommendations.");
             console.log(err);
             callback(err, null);
         } else {

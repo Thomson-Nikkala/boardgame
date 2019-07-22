@@ -217,7 +217,7 @@ function get_game(req, res) {
                         if (game_score >= best_game_score) {
                             // check if this game has already been recommended to this gamer             
                             recommended = 0;
-                            get_all_recommendations(err, res4) {
+                            get_all_recommendations(function err, res4) {
                                 if (err || res4 == null) {
                                     response.status(500).json({
                                         success: false,

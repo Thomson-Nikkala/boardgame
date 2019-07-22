@@ -227,13 +227,10 @@ function get_game(req, res) {
                             recommended = 0;
                             const recommendations = res4;
                             const recommend_entries = Object.entries(recommendations);
-                            console.log("BEFORE HERE");
                             for (const [key, recommend_data] of recommend_entries) {
                                 console.log("HERE");
                                 console.log(recommend_data);
                             }
-
-
                         }
 
                     });

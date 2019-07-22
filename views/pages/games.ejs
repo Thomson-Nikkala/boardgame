@@ -49,10 +49,10 @@ Author: Nikkala Thomson
                         <select name="min_players" id="min_players">
                             <%
 var options = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-for ( var i = 1; i <= options.length; i++ )
+for ( var i = 0; i < options.length; i++ )
 {
-    var selected = ( min_pl == i) ? "selected" : "";
-    %><option value="<%=options[ i ] %>" <%=selected %>><%=i %></option><%
+    var selected = ( min_pl == options[i]) ? "selected" : "";
+    %><option value=<%=options[ i ] %> <%=selected %>><%=options[i]%></option><%
 }
 %>
                         </select></p>
@@ -61,10 +61,10 @@ for ( var i = 1; i <= options.length; i++ )
                         <select name="max_players" id="max_players">
                             <%
 var options2 = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-for ( var i = 1; i <= options2.length; i++ )
+for ( var i = 0; i <= options2.length; i++ )
 {
-    var selected = ( max_pl == i) ? "selected" : "";
-    %><option value="<%=options2[ i ] %>" <%=selected %>><%=i %></option><%
+    let selected = ( max_pl == options2[i]) ? "selected" : "";
+    %><option value=<%=options2[ i ] %> <%=selected %>><%=options2[i] %></option><%
 }
 %>
                         </select></p>
@@ -75,8 +75,8 @@ for ( var i = 1; i <= options2.length; i++ )
 var options3 = [ "1", "15", "30", "45", "60", "90", "120", "150", "180", "210", "240", "300"];
 for ( var i = 0; i < options3.length; i++ )
 {
-    var selected = ( min_ply == options3[i]) ? "selected" : "";
-    %><option value=<%= options3[i] %> <%=selected %>><%= options3[i] %></option>
+    let selected = ( min_ply == options3[i]) ? "selected" : "";
+    %><option value=<%= options3[i] %> <%=selected %>> <%= options3[i] %></option>
                             <% } %>
                         </select></p>
 
@@ -86,7 +86,7 @@ for ( var i = 0; i < options3.length; i++ )
 var options4 = [ "15", "30", "45", "60", "90", "120", "150", "180", "210", "240", "300", "360"];
 for ( var i = 0; i < options4.length; i++ )
 {
-    var selected = ( max_ply == options4[i]) ? "selected" : "";
+    let selected = ( max_ply == options4[i]) ? "selected" : "";
     %><option value=<%=options4[ i ] %> <%=selected %>><%= options4[i]%> </option><%
 }
 %>
@@ -99,7 +99,7 @@ for ( var i = 0; i < options4.length; i++ )
 var options5 = [ "1.0", "1.5", "2.0", "2.5", "3.0", "3.5", "4.0", "4.5"];
 for ( var i = 0; i < options5.length; i++ )
 {
-    var selected = ( min_w == options5[i]) ? "selected" : "";
+    let selected = ( min_w == options5[i]) ? "selected" : "";
     %><option value=<%=options5[i] %> <%=selected %>><%=options5[i] %></option><%
 }
 %>
@@ -111,18 +111,11 @@ for ( var i = 0; i < options5.length; i++ )
 var options6 = ["1.5", "2.0", "2.5", "3.0", "3.5", "4.0", "4.5", "5.0"];
 for ( var i = 0; i < options6.length; i++ )
 {
-    var selected = ( max_w == options6[i]) ? "selected" : "";
+    let selected = ( max_w == options6[i]) ? "selected" : "";
     %><option value=<%=options6[ i ] %> <%=selected %>><%=options6[i] %></option><%
 }
 %>
                         </select></p>
-
-                    <!--              <p> Preferred themes:</p>
-                        <input type="checkbox" name="themes[]" value="" checked="checked">
-                        <br>
-                        <p> Preferred gameplay mechanisms:</p>
-                        <input type="checkbox" name="mechanisms[]" value="" checked="checked"> -->
-
                     <br>
 
                 </form>

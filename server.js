@@ -234,8 +234,19 @@ function get_game(req, res) {
                 })
             } else {
                 console.log("Back from the get_game_from_db with result:", res3);
-                const params = res3[0];
-                res.render("pages/display_game", params);
+                const the_game = res3[0];
+                if (sess.gamer < > 1) {
+                    sql = "INSERT INTO recommendation (gamer, board_game) VALUES ($1, $2);";
+                    pool.query(sql, [sess.gamer, the_game], function callback(err, result) {
+                        if (err) {
+                            console.log("An error with the DB occurred in add game to recommendation.");
+                            console.log(err);
+                            callback(err, null);
+                        }
+                    })
+                }
+
+                res.render("pages/display_game", the_game);
             }
         });
 
@@ -404,7 +415,6 @@ function go_login_err(req, res) {
 }
 
 function login(params, res, callback) {
-    console.log("IN LOGIN");
     //var username1 = $("#username").val();
     // var password1 = $("#password").val();
     var username1 = params.username;

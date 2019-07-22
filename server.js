@@ -282,7 +282,7 @@ function get_game(req, res) {
 function get_all_recommendations(callback) {
     sql2 = "SELECT * from recommendation";
     recommendation = 0;
-    pool.query(sql, function (err, result) {
+    pool.query(sql2, function (err, result) {
         if (err) {
             console.log("An error with the DB occurred in checking if game recommended.");
             console.log(err);

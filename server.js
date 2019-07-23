@@ -368,6 +368,7 @@ function register(params, res, callback) {
         } else {
             const gamer_id = res2;
             console.log("Back from get_gamer_id with result", gamer_id);
+            sess.gamer = gamer_id;
         }
     });
     /*
@@ -389,16 +390,16 @@ function get_gamer_id(username, callback) {
     let sql = "SELECT gamer FROM gamer WHERE username = $1;";
     console.log('in get_gamer_id with ', username);
     pool.query(sql, [username], function callback(err, result) {
-        if (err) {
-            console.log("An error with the DB occurred in get_gamer_id.");
-            console.log(err);
-            callback(err, null);
-        } else {
-            console.log("have result");
-            //       console.log(result);
-            //      callback(null, result);
-            callback(null, 122);
-        }
+        //      if (err) {
+        //          console.log("An error with the DB occurred in get_gamer_id.");
+        //          console.log(err);
+        //         callback(err, null);
+        //     } else {
+        console.log("have result");
+        //       console.log(result);
+        //      callback(null, result);
+        callback(null, 122);
+        //   }
     });
 
 } // end of get_gamer_id

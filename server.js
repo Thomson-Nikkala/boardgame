@@ -228,6 +228,7 @@ function get_game(req, res) {
                     check_recommended(game, function (errC, resC) {
                         // check if this game has already been recommended to this gamer             
                         recommended = 0;
+                        console.log('in check_recommended');
                         get_all_recommendations(function (errR, resR) {
                             console.log('in get_all_recommendations');
                             if (errR || resR == null) {

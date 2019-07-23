@@ -370,7 +370,7 @@ function go_preferences(req, res) {
         sess.username = "Guest";
     }
     var param = [sess.username];
-    console.log("session username is ", sess.username);
+    console.log("session username is", sess.username);
     var sql = "SELECT preferences from gamer WHERE username = $1;";
     pool.query(sql, param, function (err, result) {
         if (err) {

@@ -288,7 +288,6 @@ function get_game(req, res) {
                             });
                         }
                         */
-
                     res.render("pages/display_game", the_game);
                 }
             });

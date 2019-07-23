@@ -87,11 +87,16 @@ app.get('/login', go_login);
 app.get('/loginerr', go_login_err);
 
 app.post('/login', function (req, res, next) {
+    sess = req.session;
+    if (!(sess.username)) {
+        sess.username = "Guest";
+    }
     login(req.body, res);
 });
 
 // logout
 app.get('/logout', function () {
+    sess = req.session;
     sess.username = "Guest";
     res.redirect('/');
 });

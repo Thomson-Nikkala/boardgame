@@ -345,7 +345,7 @@ function register(params, res, callback) {
     var email = params.r_email;
     var password = params.r_password;
     const salt_rounds = 12;
-    var gamer_id = 0;
+
     //  create gamer
     bcrypt.hash(password, salt_rounds, function (err, hash) {
         var sql = "INSERT INTO gamer (username, display_name, email, hashed_password) VALUES ($1, $2, $3, $4);";
@@ -358,27 +358,30 @@ function register(params, res, callback) {
         });
     });
     // get gamer's gamer id number
-    /*
-        get_gamer_id(username, function (err, res2) {
-            if (err) {
-                return next(err);
-            } else {
-                gamer_id = res2;
-                console.log("gamer_id" + gamer_id);
-            }
-        });
 
-        /*
-            default_prefs = '{"min_players":2, "max_players":4, "min_playtime":30, "max_playtime":120, "min_weight":1.5, "max_weight":2.5, "themes":[], "mechanisms":[]}';
-            // create default game preferences for gamer
-            var sql3 = "INSERT INTO preference(gamer, preferences) VALUES ($1, $2)";
-            pool.query(sql3, [gamer_id, default_prefs], function callback(err, result) {
-                if (err) {
-                    console.log("An error with the DB occurred in default prefs.");
-                    console.log(err);
-                    callback(err, null);
-                }
-            }); */
+    get_gamer_id(username, function (err2, res2) {
+        if (res2 == null) {
+            response.status(500).json({
+                success: false,
+                data: error
+            })
+        } else {
+            const gamer_id = res2;
+            console.log("Back from get_gamer_id with result", gamer_id);
+        }
+    });
+
+    /*
+        default_prefs = '{"min_players":2, "max_players":4, "min_playtime":30, "max_playtime":120, "min_weight":1.5, "max_weight":2.5, "themes":[], "mechanisms":[]}';
+        // create default game preferences for gamer
+        var sql3 = "INSERT INTO preference(gamer, preferences) VALUES ($1, $2)";
+        pool.query(sql3, [gamer_id, default_prefs], function callback(err, result) {
+            if (err) {
+                console.log("An error with the DB occurred in default prefs.");
+                console.log(err);
+                callback(err, null);
+            }
+        }); */
 
     res.redirect('/games');
 } // end of register

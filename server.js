@@ -224,45 +224,46 @@ function get_game(req, res) {
                 }
                 console.log('game_score is ', game_score, ' best_game_score is', best_game_score);
                 if (game_score > best_game_score) {
+                    /* this section does not work
+                                        check_recommended(game, function (errC, resC) {
+                                            // check if this game has already been recommended to this gamer             
+                                            recommended = 0;
+                                            console.log('in check_recommended');
+                                            get_all_recommendations(function (errR, resR) {
+                                                console.log('in get_all_recommendations');
+                                                if (errR) {
+                                                    console.log('Error in call of get_all_recommendations', errR);
+                                                    response.status(500).json({
+                                                        success: false,
+                                                        data: error
+                                                    });
+                                                } else {
+                                                    const recommendations = resR;
+                                                    const recommend_entries = Object.entries(recommendations);
+                                                    console.log('game ', game, 'game_score', game_score, 'before recommend_data');
+                                                    for (const [key, recommend_data] of recommend_entries) {
+                                                        var recommend_values = Object.values(recommend_data);
+                                                        recommend_user = recommend_values[0];
+                                                        recommend_game = parseInt(recommend_values[1], 10);
+                                                        console.log('recommend_user', recommend_user);
+                                                        console.log('recommend_game', recommend_game);
+                                                        if ((recommend_user == sess.username) && (recommend_game == game)) {
+                                                            recommended = 1;
+                                                        } else {
+                                                            // if not already recommended, update best board game
+                                                            best_game_score = game_score;
+                                                            best_board_game = game;
+                                                            console.log("best_board_game" + best_board_game);
+                                                        }
+                                                    } // end for loop
+                                                }
 
-                    check_recommended(game, function (errC, resC) {
-                        // check if this game has already been recommended to this gamer             
-                        recommended = 0;
-                        console.log('in check_recommended');
-                        get_all_recommendations(function (errR, resR) {
-                            console.log('in get_all_recommendations');
-                            if (errR) {
-                                console.log('Error in call of get_all_recommendations', errR);
-                                response.status(500).json({
-                                    success: false,
-                                    data: error
-                                });
-                            } else {
-                                const recommendations = resR;
-                                const recommend_entries = Object.entries(recommendations);
-                                console.log('game ', game, 'game_score', game_score, 'before recommend_data');
-                                for (const [key, recommend_data] of recommend_entries) {
-                                    var recommend_values = Object.values(recommend_data);
-                                    recommend_user = recommend_values[0];
-                                    recommend_game = parseInt(recommend_values[1], 10);
-                                    console.log('recommend_user', recommend_user);
-                                    console.log('recommend_game', recommend_game);
-                                    if ((recommend_user == sess.username) && (recommend_game == game)) {
-                                        recommended = 1;
-                                    } else {
-                                        // if not already recommended, update best board game
-                                        best_game_score = game_score;
-                                        best_board_game = game;
-                                        console.log("best_board_game" + best_board_game);
-                                    }
-                                } // end for loop
-                            }
-
-                        });
-                    });
+                                            });
+                                        });  */
+                    best_game_score = game_score;
+                    best_board_game = game;
+                    console.log("new best_board_game" + best_board_game);
                 } // end if
-
-
             } // end for loop
         }
     });
@@ -270,7 +271,6 @@ function get_game(req, res) {
     // retrieve best board game from database based on board_game id
     get_game_from_db(best_board_game, function (err2, res3) {
         if (res3 == null) {
-            console.log('best_board_game is ', best_board_game);
             response.status(500).json({
                 success: false,
                 data: error

@@ -194,7 +194,6 @@ function get_game(req, res) {
             for (const [key, game_data] of game_entries) {
                 var game_data_values = Object.values(game_data);
                 game = game_data_values[0];
-                console.log('game is ', game);
                 game_score = 0;
                 var game_details = Object.values(game_data_values[3]);
                 game_min_players = parseInt(game_details[0], 10);
@@ -227,7 +226,6 @@ function get_game(req, res) {
                 if (game_score > best_game_score) {
                     // check if this game has already been recommended to this gamer             
                     recommended = 0;
-                    console.log('in check game');
                     get_all_recommendations(function (err, res4) {
                         if (err || res4 == null) {
                             response.status(500).json({
@@ -238,6 +236,8 @@ function get_game(req, res) {
                             const recommendations = res4;
                             const recommend_entries = Object.entries(recommendations);
                             for (const [key, recommend_data] of recommend_entries) {
+
+                                console.log('game ', game, 'game_score', game_score, 'in recommend_data');
                                 var recommend_values = Object.values(recommend_data);
                                 recommend_user = recommend_values[0];
                                 recommend_game = parseInt(recommend_values[1], 10);
@@ -251,7 +251,7 @@ function get_game(req, res) {
                                     best_board_game = game;
                                     console.log("best_board_game" + best_board_game);
                                 }
-                            }
+                            } // end for loop
                         }
 
                     });

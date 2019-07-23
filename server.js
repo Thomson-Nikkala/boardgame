@@ -387,21 +387,19 @@ function register(params, res, callback) {
 } // end of register
 
 function get_gamer_id(username, callback) {
-    let sql = "SELECT gamer FROM gamer WHERE username = $1;";
+    const sql2 = "SELECT gamer FROM gamer WHERE username = $1;";
     console.log('in get_gamer_id with ', username);
-    pool.query(sql, [username], function callback(err, result) {
-        if (err) {
+    const user = [username];
+    pool.query(sql2, [username], function callback(err2, result) {
+        if (err2) {
             console.log("An error with the DB occurred in get_gamer_id.");
             console.log(err);
             callback(err, null);
         }
-        //    console.log("have result");
-        //       console.log(result);
-        //      callback(null, result);
-        callback(null, 122);
-
+        console.log("have result");
+        console.log(result.rows);
+        callback(null, result.rows);
     });
-
 } // end of get_gamer_id
 
 

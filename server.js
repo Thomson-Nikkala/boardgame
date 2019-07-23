@@ -360,17 +360,16 @@ function register(params, res, callback) {
     // get gamer's gamer id number
 
     get_gamer_id(username, function (err2, res2) {
-        //   if (res2 == null) {
-        //      response.status(500).json({
-        //          success: false,
-        //          data: error
-        //      })
-        //  } else {
-        const gamer_id = res2;
-        console.log("Back from get_gamer_id with result", gamer_id);
-        //  }
+        if (res2 == null) {
+            response.status(500).json({
+                success: false,
+                data: error
+            })
+        } else {
+            const gamer_id = res2;
+            console.log("Back from get_gamer_id with result", gamer_id);
+        }
     });
-
     /*
         default_prefs = '{"min_players":2, "max_players":4, "min_playtime":30, "max_playtime":120, "min_weight":1.5, "max_weight":2.5, "themes":[], "mechanisms":[]}';
         // create default game preferences for gamer
@@ -388,17 +387,19 @@ function register(params, res, callback) {
 
 function get_gamer_id(username, callback) {
     let sql = "SELECT gamer FROM gamer WHERE username = $1;";
-    pool.query(sql, [username], function callback(err, result) {
-        if (err) {
-            console.log("An error with the DB occurred in get_gamer_id.");
-            console.log(err);
-            callback(err, null);
-        } else {
-            console.log("have result");
-            console.log(result);
-            callback(null, result);
-        }
-    });
+    console.log('in get_gamer_id with ', username);
+    // pool.query(sql, [username], function callback(err, result) {
+    //     if (err) {
+    //         console.log("An error with the DB occurred in get_gamer_id.");
+    //         console.log(err);
+    //        callback(err, null);
+    //     } else {
+    //        console.log("have result");
+    //       console.log(result);
+    //      callback(null, result);
+    //    }
+    //  });
+    callback(null, 122);
 } // end of get_gamer_id
 
 

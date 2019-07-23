@@ -363,7 +363,7 @@ function register(params, res, callback) {
         if (err) {
             return next(err);
         } else {
-            gamer_id = res2.rows[0];
+            gamer_id = res2;
             console.log("gamer_id" + gamer_id);
         }
     });
@@ -384,6 +384,20 @@ function register(params, res, callback) {
 
     res.redirect('/games');
 } // end of register
+
+function get_gamer_id(username, callback) {
+    var sql = "SELECT gamer FROM gamer WHERE username = $1";
+    var param = [username];
+    pool.query(sql, param, function (err, result) {
+        if (err) {
+            console.log("An error with the DB occurred in get_gamer_id.");
+            console.log(err);
+            callback(err, null);
+        }
+        callback(null, result.rows[0]);
+    })
+}
+
 
 //  Update gaming preferences section------------------------------
 
@@ -421,18 +435,6 @@ function go_preferences(req, res) {
 
 // Login section----------------------------------------------------
 
-function get_gamer_id(username, callback) {
-    var sql = "SELECT gamer FROM gamer WHERE username = $1";
-    var param = [username];
-    pool.query(sql, param, function (err, result) {
-        if (err) {
-            console.log("An error with the DB occurred in get_gamer_id.");
-            console.log(err);
-            callback(err, null);
-        }
-        callback(null, result.rows);
-    })
-}
 
 function go_login(req, res) {
     sess = req.session;

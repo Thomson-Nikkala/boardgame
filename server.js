@@ -395,7 +395,7 @@ function get_gamer_id(username, callback) {
             console.log(err);
             callback(err, null);
         }
-        console.log("have result");
+        //    console.log("have result");
         //       console.log(result);
         //      callback(null, result);
         callback(null, 122);

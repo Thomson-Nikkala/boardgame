@@ -368,8 +368,6 @@ function register(params, res, callback) {
         }
     });
 
-
-    console.log('Gamer id', gamer_id);
     /*
         default_prefs = '{"min_players":2, "max_players":4, "min_playtime":30, "max_playtime":120, "min_weight":1.5, "max_weight":2.5, "themes":[], "mechanisms":[]}';
         // create default game preferences for gamer
@@ -388,7 +386,7 @@ function register(params, res, callback) {
 function get_gamer_id(username, callback) {
     let sql = "SELECT gamer FROM gamer WHERE username = $1";
     let param = [username];
-    console.log("HERE");
+    console.log("HERE param" + param);
     pool.query(sql, param, function (err, result) {
         console.log("HERE2");
         if (err) {

@@ -444,37 +444,37 @@ function login(params, res, callback) {
         }
     });
 
-    bcrypt.compare(password1, hashed_password, function (err, result) {
-        if (result == true) {
-            sess.username = username1;
-            res.redirect('/gamer');
-        } else {
-            res.redirect('/loginerr');
-        }
+    // bcrypt.compare(password1, hashed_password, function (err, result) {
+    //   if (result == true) {
+    //        sess.username = username1;
+    //       res.redirect('/gamer');
+    //    } else {
+    //        res.redirect('/loginerr');
+    //    }
+    //});
+
+
+    bcrypt.hash(password1, salt_rounds, function (err, hash) {
+        var sql = "SELECT * FROM gamer WHERE username=$1 AND hashed_password=$2";
+        pool.query(sql, [username1, hash], function callback(err, result) {
+            if (err) {
+                console.log("An error with the DB occurred in login()");
+                console.log(err);
+                callback(err, null);
+            } else {
+                console.log(result);
+                new_gamer = result.rows[0];
+                console.log(new_gamer);
+                if (new_gamer) {
+                    sess.username = username1;
+                    res.redirect('/gamer');
+                } else {
+                    res.redirect('/loginerr');
+                }
+            }
+        })
+
+
     });
-
-
-    /* bcrypt.hash(password1, salt_rounds, function (err, hash) {
-         var sql = "SELECT * FROM gamer WHERE username=$1 AND hashed_password=$2";
-         pool.query(sql, [username1, hash], function callback(err, result) {
-             if (err) {
-                 console.log("An error with the DB occurred in login()");
-                 console.log(err);
-                 callback(err, null);
-             } else {
-                 console.log(result);
-                 new_gamer = result.rows[0];
-                 console.log(new_gamer);
-                 if (new_gamer) {
-                     sess.username = username1;
-                     res.redirect('/gamer');
-                 } else {
-                     res.redirect('/loginerr');
-                 }
-             }
-         }) 
-
-
-     });*/
 
 } // end login

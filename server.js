@@ -84,7 +84,7 @@ app.post('/register', function (req, res, next) {
 //  login
 app.get('/login', go_login);
 
-app.get('/login/err', go_login_err);
+app.get('/loginerr', go_login_err);
 
 app.post('/login', function (req, res, next) {
     login(req.body, res);
@@ -394,7 +394,7 @@ function get_gamer_id(username, callback) {
             console.log(err);
             callback(err, null);
         }
-        console.log(result);
+        console.log(result.rows);
         callback(null, result.rows[0]);
 
     })
@@ -477,7 +477,7 @@ function login(params, res, callback) {
                     sess.gamer = new_gamer;
                     res.redirect('/gamer');
                 } else {
-                    res.redirect('/login/err');
+                    res.redirect('/loginerr');
                 }
             }
         })

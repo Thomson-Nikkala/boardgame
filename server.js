@@ -223,7 +223,7 @@ function get_game(req, res) {
                         game_score = game_score + 20;
                     }
                 }
-
+                console.log('game_score is ', game_score, ' best_game_score is', best_game_score);
                 if (game_score >= best_game_score) {
                     // check if this game has already been recommended to this gamer             
                     recommended = 0;

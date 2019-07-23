@@ -95,7 +95,7 @@ app.post('/login', function (req, res, next) {
 });
 
 // logout
-app.get('/logout', function () {
+app.get('/logout', function (req, res) {
     sess = req.session;
     sess.username = "Guest";
     res.redirect('/');

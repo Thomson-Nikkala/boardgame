@@ -231,7 +231,8 @@ function get_game(req, res) {
                         console.log('in check_recommended');
                         get_all_recommendations(function (errR, resR) {
                             console.log('in get_all_recommendations');
-                            if (errR || resR == null) {
+                            if (errR) {
+                                console.log('ErrR is', errR);
                                 response.status(500).json({
                                     success: false,
                                     data: error

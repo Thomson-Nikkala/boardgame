@@ -357,6 +357,7 @@ function register(params, res, callback) {
             }
         });
     });
+    console.log("Just before setting, username is" + username);
     sess.username = username;
     res.redirect('/games');
 } // end of register

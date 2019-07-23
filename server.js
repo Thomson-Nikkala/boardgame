@@ -427,10 +427,10 @@ function go_login_err(req, res) {
 }
 
 function login(params, res, callback) {
-    //var username1 = $("#username").val();
-    // var password1 = $("#password").val();
-    var username1 = params.username;
-    var password1 = params.password;
+    var username1 = $("#username").val();
+    var password1 = $("#password").val();
+    // var username1 = params.username;
+    //  var password1 = params.password;
     var hashed_password = '';
     console.log('username is ', username1);
     console.log('password is ', password1);

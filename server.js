@@ -431,9 +431,34 @@ function login(params, res, callback) {
     // var password1 = $("#password").val();
     var username1 = params.username;
     var password1 = params.password;
+    var hashed_password = '';
+    console.log('username is ', username1);
+    console.log('password is ', password1);
     const salt_rounds = 12;
-    var new_gamer = 0;
-    bcrypt.hash(password1, salt_rounds, function (err, hash) {
+    var sql = "SELECT * FROM gamer WHERE username=$1";
+    pool.query(sql, [username1], function callback(err, result) {
+        if (err) {
+            console.log("An error with the DB occurred in login()");
+            console.log(err);
+            callback(err, null);
+        } else {
+            console.log('result' + result);
+            hashed_password = result.rows[0].hashed_password;
+            console.log(hashed_password);
+        }
+    });
+
+
+    /*var new_gamer = result.rows[0];
+                console.log('new_gamer'+new_gamer);
+                if (new_gamer) {
+                    sess.username = username1;
+                    res.redirect('/gamer');
+                } else {
+                    res.redirect('/loginerr');
+                }
+
+   /* bcrypt.hash(password1, salt_rounds, function (err, hash) {
         var sql = "SELECT * FROM gamer WHERE username=$1 AND hashed_password=$2";
         pool.query(sql, [username1, hash], function callback(err, result) {
             if (err) {
@@ -451,9 +476,9 @@ function login(params, res, callback) {
                     res.redirect('/loginerr');
                 }
             }
-        })
+        }) 
 
 
-    });
+    });*/
 
 } // end login

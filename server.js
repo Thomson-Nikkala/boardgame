@@ -444,7 +444,7 @@ function login(params, res, callback) {
         }
     });
 
-    bcrypt.compare(password, hashed_password, function (err, result) {
+    bcrypt.compare(password1, hashed_password, function (err, result) {
         if (result == true) {
             sess.username = username1;
             res.redirect('/gamer');

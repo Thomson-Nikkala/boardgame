@@ -370,18 +370,19 @@ function go_preferences(req, res) {
         sess.username = "Guest";
     }
     var param = [sess.username];
-    var sql = "SELECT * from gamer WHERE username = $1";
+    var sql = "SELECT preferences from gamer WHERE username = $1;";
     pool.query(sql, param, function (err, result) {
         if (err) {
-            console.log("An g error with the DB occurred in go_preferences.");
+            console.log("An error with the DB occurred in go_preferences.");
             console.log(err);
         } else {
-            var min_players = result.rows[0].preferences.min_players;
-            var max_players = result.rows[0].preferences.max_players;
-            var min_playtime = result.rows[0].preferences.min_playtime;
-            var max_playtime = result.rows[0].preferences.max_playtime;
-            var min_weight = result.rows[0].preferences.min_weight;
-            var max_weight = result.rows[0].preferences.max_weight;
+            console.log(result.rows[0]);
+            var min_players = result.rows[0].min_players;
+            var max_players = result.rows[0].max_players;
+            var min_playtime = result.rows[0].min_playtime;
+            var max_playtime = result.rows[0].max_playtime;
+            var min_weight = result.rows[0].min_weight;
+            var max_weight = result.rows[0].max_weight;
 
             res.render('pages/games.ejs', {
                 min_pl: min_players,

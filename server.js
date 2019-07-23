@@ -194,6 +194,7 @@ function get_game(req, res) {
             for (const [key, game_data] of game_entries) {
                 var game_data_values = Object.values(game_data);
                 game = game_data_values[0];
+                console.log('game is ', game);
                 game_score = 0;
                 var game_details = Object.values(game_data_values[3]);
                 game_min_players = parseInt(game_details[0], 10);

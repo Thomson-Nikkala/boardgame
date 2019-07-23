@@ -390,6 +390,7 @@ function get_gamer_id(username, callback) {
     let param = [username];
     console.log("HERE");
     pool.query(sql, param, function (err, result) {
+        console.log("HERE2");
         if (err) {
             console.log("An error with the DB occurred in get_gamer_id.");
             console.log(err);

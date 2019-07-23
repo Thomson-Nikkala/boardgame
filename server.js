@@ -360,15 +360,15 @@ function register(params, res, callback) {
     // get gamer's gamer id number
 
     get_gamer_id(username, function (err2, res2) {
-        if (res2 == null) {
-            response.status(500).json({
-                success: false,
-                data: error
-            })
-        } else {
-            const gamer_id = res2;
-            console.log("Back from get_gamer_id with result", gamer_id);
-        }
+        //   if (res2 == null) {
+        //      response.status(500).json({
+        //          success: false,
+        //          data: error
+        //      })
+        //  } else {
+        const gamer_id = res2;
+        console.log("Back from get_gamer_id with result", gamer_id);
+        //  }
     });
 
     /*

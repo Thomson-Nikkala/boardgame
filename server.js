@@ -91,11 +91,11 @@ app.post('/login', function (req, res, next) {
 });
 
 // logout
-app.get('/logout', function (req, res) {
+app.get('/logout', function () {
     sess.username = "Guest";
     res.redirect('/');
-    
-}
+});
+
 // connect 
 app.listen(app.get('port'), function () {
     console.log('Now listening for connections on port: ', app.get('port'));

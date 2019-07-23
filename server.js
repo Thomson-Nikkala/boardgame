@@ -386,15 +386,17 @@ function register(params, res, callback) {
 } // end of register
 
 function get_gamer_id(username, callback) {
-    var sql = "SELECT gamer FROM gamer WHERE username = $1";
-    var param = [username];
+    let sql = "SELECT gamer FROM gamer WHERE username = $1";
+    let param = [username];
     pool.query(sql, param, function (err, result) {
         if (err) {
             console.log("An error with the DB occurred in get_gamer_id.");
             console.log(err);
             callback(err, null);
         }
+        console.log(result);
         callback(null, result.rows[0]);
+
     })
 }
 

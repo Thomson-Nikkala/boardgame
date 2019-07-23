@@ -188,11 +188,9 @@ function get_game(req, res) {
             });
         } else {
             const board_games = res2; // Javascript object
+
             // calculate best board game
-
-            const game_keys = Object.keys(board_games);
             const game_entries = Object.entries(board_games);
-
             for (const [key, game_data] of game_entries) {
                 var game_data_values = Object.values(game_data);
                 game = game_data_values[0];
@@ -235,18 +233,27 @@ function get_game(req, res) {
                                 data: error
                             });
                         } else {
-                            recommended = 0;
                             const recommendations = res4;
                             const recommend_entries = Object.entries(recommendations);
+                            for (const [key, recommend_data] of recommend_entries) {
+                                var recommend_values = Object.values(recommend_data);
+                                recommend_user = recommend_values[0];
+                                recommend_game = parseInt(recommend_values[1], 10);
+                                console.log('recommend_user', recommend_user);
+                                console.log('recommend_game', recommend_game);
+                                if ((recommend_user == sess.username) && (recommend_game == game)) {
+                                    recommended = 1;
+                                } else {
+                                    // if not already recommended, update best board game
+                                    best_game_score = game_score;
+                                    best_board_game = game;
+                                    console.log("best_board_game" + best_board_game);
+                                }
+                            }
                         }
 
                     });
-                    // if not already recommended, update best board game
-                    if (recommended == 0) {
-                        best_game_score = game_score;
-                        best_board_game = game;
-                        console.log("best_board_game" + best_board_game);
-                    }
+
                 }
 
             } // end for loop
@@ -275,11 +282,8 @@ function get_game(req, res) {
                     res.render("pages/display_game", the_game);
                 }
             });
-
-
         }
     });
-
 } // end of get_game
 
 //  check if game has already been recommended
@@ -314,9 +318,6 @@ function get_all_games(callback) {
 } // end of get_all_games
 
 
-
-
-
 function get_game_from_db(game, callback) {
 
     var sql = "SELECT name, image_url, properties FROM board_game WHERE board_game = $1::int";
@@ -332,8 +333,6 @@ function get_game_from_db(game, callback) {
         callback(null, result.rows[0]);
     });
 }
-
-
 
 
 // Registration section----------------------------------------------
@@ -443,18 +442,11 @@ function login(params, res, callback) {
             bcrypt.compare(password1, hashed_password, function (err, result) {
                 if (result == true) {
                     sess.username = username1;
-                    res.redirect('/gamer');
+                    res.redirect('/games');
                 } else {
                     res.redirect('/loginerr');
                 }
             });
-
         }
     });
-
-
-
-
-
-
 } // end login

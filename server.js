@@ -348,8 +348,8 @@ function register(params, res, callback) {
     const default_prefs = '{"min_players":2, "max_players":4, "min_playtime":30, "max_playtime":120, "min_weight":1.5, "max_weight":2.5, "themes":[], "mechanisms":[]}';
     //  create gamer
     bcrypt.hash(password, salt_rounds, function (err, hash) {
-        var sql = "INSERT INTO gamer (username, display_name, email, hashed_password, default_prefs) VALUES ($1, $2, $3, $4, $5);";
-        pool.query(sql, [username, display_name, email, hash], function callback(err, result) {
+        var sql = "INSERT INTO gamer (username, display_name, email, hashed_password, preferences) VALUES ($1, $2, $3, $4, $5);";
+        pool.query(sql, [username, display_name, email, hash, default_prefs], function callback(err, result) {
             if (err) {
                 console.log("An error with the DB occurred in register.");
                 console.log(err);

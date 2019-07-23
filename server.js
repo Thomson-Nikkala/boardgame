@@ -354,12 +354,13 @@ function register(params, res, callback) {
                 console.log("An error with the DB occurred in register.");
                 console.log(err);
                 callback(err, null);
+            } else {
+                sess.username = username;
+                res.redirect('/games');
             }
         });
     });
-    console.log("Just before setting, username is" + username);
-    sess.username = username;
-    res.redirect('/games');
+
 } // end of register
 
 

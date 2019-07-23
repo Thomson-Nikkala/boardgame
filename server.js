@@ -397,8 +397,8 @@ function get_gamer_id(user, callback) {
             callback(err5, null);
         }
         console.log("have result");
-        console.log(res5.rows);
-        callback(null, res5.rows);
+        console.log(res5);
+        callback(null, res5);
     });
 } // end of get_gamer_id
 

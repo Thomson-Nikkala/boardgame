@@ -390,15 +390,15 @@ function get_gamer_id(username, callback) {
     const sql2 = "SELECT gamer FROM gamer WHERE username = $1;";
     console.log('in get_gamer_id with ', username);
     const user = [username];
-    pool.query(sql2, [username], function callback(err2, result) {
+    pool.query(sql2, [username], function callback(err2, res2) {
         if (err2) {
             console.log("An error with the DB occurred in get_gamer_id.");
             console.log(err);
             callback(err, null);
         }
         console.log("have result");
-        console.log(result.rows);
-        callback(null, result.rows);
+        console.log(res2.rows);
+        callback(null, res2.rows);
     });
 } // end of get_gamer_id
 

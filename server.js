@@ -373,7 +373,7 @@ function go_preferences(req, res) {
     var sql = "SELECT * from gamer WHERE username = $1";
     pool.query(sql, param, function (err, result) {
         if (err) {
-            console.log("An error with the DB occurred in go_preferences.");
+            console.log("An g error with the DB occurred in go_preferences.");
             console.log(err);
         } else {
             var min_players = result.rows[0].preferences.min_players;

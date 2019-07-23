@@ -380,12 +380,12 @@ function go_preferences(req, res) {
             console.log(err);
         } else {
             console.log(result.rows[0]);
-            var min_players = result.rows[0].min_players;
-            var max_players = result.rows[0].max_players;
-            var min_playtime = result.rows[0].min_playtime;
-            var max_playtime = result.rows[0].max_playtime;
-            var min_weight = result.rows[0].min_weight;
-            var max_weight = result.rows[0].max_weight;
+            var min_players = result.rows[0].preferences.min_players;
+            var max_players = result.rows[0].preferences.max_players;
+            var min_playtime = result.rows[0].preferences.min_playtime;
+            var max_playtime = result.rows[0].preferences.max_playtime;
+            var min_weight = result.rows[0].preferences.min_weight;
+            var max_weight = result.rows[0].preferences.max_weight;
 
             res.render('pages/games.ejs', {
                 min_pl: min_players,

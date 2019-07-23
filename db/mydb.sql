@@ -24,6 +24,7 @@ CREATE TABLE public.gamer (
 	display_name    VARCHAR(100) NOT NULL,
 	email           VARCHAR(50) NOT NULL,
 	hashed_password TEXT NOT NULL,
+    preferences json NOT NULL,
     created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	updated_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -41,22 +42,16 @@ CREATE TABLE public.board_game (
 	image_url   TEXT NOT NULL,
     properties json NOT NULL
 );
-    
-CREATE TABLE public.preference (
-    preference      SERIAL      NOT NULL PRIMARY KEY,
-	gamer  INTEGER UNIQUE,
-    FOREIGN KEY (gamer) REFERENCES gamer(gamer),
-    preferences json
-);
+
 
 CREATE TABLE public.recommendation (
-    gamer             INTEGER NOT NULL,
+    username             TEXT NOT NULL,
     board_game        INTEGER NOT NULL,
-    PRIMARY KEY (gamer, board_game), 
-    -- the presence of a gamer/board_game combination in this table means that the game has been recommended to the gamer
+    PRIMARY KEY (username, board_game), 
+    -- the presence of a username/board_game combination in this table means that the game has been recommended to the gamer
     -- if either gamer or board_game are deleted, any associated recommendations are also deleted
-    CONSTRAINT recommendation_gamer_fkey FOREIGN KEY (gamer)
-      REFERENCES gamer (gamer) 
+    CONSTRAINT recommendation_gamer_fkey FOREIGN KEY (username)
+      REFERENCES gamer (username) 
       ON UPDATE NO ACTION ON DELETE CASCADE,
     CONSTRAINT recommendation_board_game_fkey FOREIGN KEY (board_game)
       REFERENCES board_game (board_game) 

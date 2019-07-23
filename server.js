@@ -51,8 +51,8 @@ app.set('port', (process.env.PORT || 5000));
 // home
 app.get('/', function (req, res, next) {
     sess = req.session;
-    if (!(sess.gamer)) {
-        sess.gamer = 1;
+    if (!(sess.username)) {
+        sess.username = "Guest";
     }
     res.sendfile('index.html');
 });
@@ -66,8 +66,8 @@ app.get('/games', go_preferences);
 // get game recommendation web service endpoint
 app.post('/games', function (req, res, next) {
     sess = req.session;
-    if (!(sess.gamer)) {
-        sess.gamer = 1;
+    if (!(sess.username)) {
+        sess.username = "Guest";
     }
     get_game(req.body, res);
 });
@@ -75,8 +75,8 @@ app.post('/games', function (req, res, next) {
 // process form for registration
 app.post('/register', function (req, res, next) {
     sess = req.session;
-    if (!(sess.gamer)) {
-        sess.gamer = 1;
+    if (!(sess.username)) {
+        sess.username = "Guest";
     }
     register(req.body, res);
 });
@@ -158,8 +158,8 @@ function get_game(req, res) {
     var prefs_json = '{"min_players":' + min_players + ',"max_players":' + max_players + ',"min_playtime":' + min_playtime + ', "max_playtime":' + max_playtime + ', "min_weight":' + min_weight + ', "max_weight":' +
         max_weight + ', "themes":[], "mechanisms":[]}';
     console.log(prefs_json);
-    var sql = "UPDATE preference SET preferences = $1 WHERE gamer = $2";
-    pool.query(sql, [prefs_json, sess.gamer], function callback(err, result) {
+    var sql = "UPDATE gamer SET preferences = $1 WHERE username = $2";
+    pool.query(sql, [prefs_json, sess.username], function callback(err, result) {
         if (err) {
             console.log("An error with the DB occurred in get_game preference save.");
             console.log(err);
@@ -254,9 +254,9 @@ function get_game(req, res) {
                 } else {
                     console.log("Back from the get_game_from_db with result:", res3);
                     const the_game = res3[0];
-                    if (sess.gamer !== 1) {
-                        sql = "INSERT INTO recommendation (gamer, board_game) VALUES ($1, $2);";
-                        pool.query(sql, [sess.gamer, the_game], function callback(err, result) {
+                    if (sess.username !== "Guest") {
+                        sql = "INSERT INTO recommendation (username, board_game) VALUES ($1, $2);";
+                        pool.query(sql, [sess.username, the_game], function callback(err, result) {
                             if (err) {
                                 console.log("An error with the DB occurred in add game to recommendation.");
                                 console.log(err);
@@ -333,8 +333,8 @@ function get_game_from_db(game, callback) {
 
 function go_register(req, res) {
     sess = req.session;
-    if (!(sess.gamer)) {
-        sess.gamer = 1;
+    if (!(sess.username)) {
+        sess.username = "Guest";
     }
     res.render('pages/register.ejs');
 }
@@ -345,10 +345,10 @@ function register(params, res, callback) {
     var email = params.r_email;
     var password = params.r_password;
     const salt_rounds = 12;
-
+    const default_prefs = '{"min_players":2, "max_players":4, "min_playtime":30, "max_playtime":120, "min_weight":1.5, "max_weight":2.5, "themes":[], "mechanisms":[]}';
     //  create gamer
     bcrypt.hash(password, salt_rounds, function (err, hash) {
-        var sql = "INSERT INTO gamer (username, display_name, email, hashed_password) VALUES ($1, $2, $3, $4);";
+        var sql = "INSERT INTO gamer (username, display_name, email, hashed_password, default_prefs) VALUES ($1, $2, $3, $4, $5);";
         pool.query(sql, [username, display_name, email, hash], function callback(err, result) {
             if (err) {
                 console.log("An error with the DB occurred in register.");
@@ -357,61 +357,20 @@ function register(params, res, callback) {
             }
         });
     });
-    // get gamer's gamer id number
-
-    get_gamer_id(username, function (err2, res2) {
-        if (res2 == null) {
-            response.status(500).json({
-                success: false,
-                data: error
-            })
-        } else {
-            const gamer_id = res2;
-            console.log("Back from get_gamer_id with result", gamer_id);
-            sess.gamer = gamer_id;
-        }
-    });
-    /*
-        default_prefs = '{"min_players":2, "max_players":4, "min_playtime":30, "max_playtime":120, "min_weight":1.5, "max_weight":2.5, "themes":[], "mechanisms":[]}';
-        // create default game preferences for gamer
-        var sql3 = "INSERT INTO preference(gamer, preferences) VALUES ($1, $2)";
-        pool.query(sql3, [gamer_id, default_prefs], function callback(err, result) {
-            if (err) {
-                console.log("An error with the DB occurred in default prefs.");
-                console.log(err);
-                callback(err, null);
-            }
-        }); */
-
+    sess.username = username;
     res.redirect('/games');
 } // end of register
-
-function get_gamer_id(user, callback) {
-    const sql5 = "SELECT gamer FROM gamer WHERE username = $1;";
-    console.log('in get_gamer_id with ', user);
-    const user1 = [user];
-    pool.query(sql5, user1, function callback(err5, res5) {
-        if (err5) {
-            console.log("An error with the DB occurred in get_gamer_id.");
-            console.log(err5);
-            callback(err5, null);
-        }
-        console.log("have result");
-        console.log(res5);
-        callback(null, res5);
-    });
-} // end of get_gamer_id
 
 
 //  Update gaming preferences section------------------------------
 
 function go_preferences(req, res) {
     sess = req.session;
-    if (!(sess.gamer)) {
-        sess.gamer = 1;
+    if (!(sess.username)) {
+        sess.username = "Guest";
     }
-    var param = [sess.gamer];
-    var sql = "SELECT * from preference WHERE gamer = $1";
+    var param = [sess.username];
+    var sql = "SELECT * from preference WHERE username = $1";
     pool.query(sql, param, function (err, result) {
         if (err) {
             console.log("An error with the DB occurred in go_preferences.");
@@ -442,16 +401,16 @@ function go_preferences(req, res) {
 
 function go_login(req, res) {
     sess = req.session;
-    if (!(sess.gamer)) {
-        sess.gamer = 1;
+    if (!(sess.username)) {
+        sess.username = "Guest";
     }
     res.render('pages/login.ejs');
 }
 
 function go_login_err(req, res) {
     sess = req.session;
-    if (!(sess.gamer)) {
-        sess.gamer = 1;
+    if (!(sess.username)) {
+        sess.username = "Guest";
     }
     res.render('pages/login_err.ejs');
 }
@@ -464,7 +423,7 @@ function login(params, res, callback) {
     const salt_rounds = 12;
     var new_gamer = 0;
     bcrypt.hash(password1, salt_rounds, function (err, hash) {
-        var sql = "SELECT gamer FROM gamer WHERE username=$1 AND hashed_password=$2";
+        var sql = "SELECT * FROM gamer WHERE username=$1 AND hashed_password=$2";
         pool.query(sql, [username1, hash], function callback(err, result) {
             if (err) {
                 console.log("An error with the DB occurred in login()");
@@ -473,10 +432,9 @@ function login(params, res, callback) {
             } else {
                 console.log(result);
                 new_gamer = result.rows[0];
-
                 console.log(new_gamer);
                 if (new_gamer) {
-                    sess.gamer = new_gamer;
+                    sess.username = username1;
                     res.redirect('/gamer');
                 } else {
                     res.redirect('/loginerr');
@@ -487,4 +445,4 @@ function login(params, res, callback) {
 
     });
 
-}
+} // end login

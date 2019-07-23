@@ -370,7 +370,7 @@ function go_preferences(req, res) {
         sess.username = "Guest";
     }
     var param = [sess.username];
-    var sql = "SELECT * from preference WHERE username = $1";
+    var sql = "SELECT * from gamer WHERE username = $1";
     pool.query(sql, param, function (err, result) {
         if (err) {
             console.log("An error with the DB occurred in go_preferences.");

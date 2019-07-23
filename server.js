@@ -392,7 +392,8 @@ function get_gamer_id(username, callback) {
             console.log(err);
             callback(err, null);
         } else {
-            console.log('in get_gamer_id result.rows' + result.rows);
+            console.log("have result");
+            console.log(result);
             callback(null, result.rows[0]);
         }
     });

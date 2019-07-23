@@ -232,7 +232,7 @@ function get_game(req, res) {
                         get_all_recommendations(function (errR, resR) {
                             console.log('in get_all_recommendations');
                             if (errR) {
-                                console.log('ErrR is', errR);
+                                console.log('Error in call of get_all_recommendations', errR);
                                 response.status(500).json({
                                     success: false,
                                     data: error
@@ -240,9 +240,8 @@ function get_game(req, res) {
                             } else {
                                 const recommendations = resR;
                                 const recommend_entries = Object.entries(recommendations);
+                                console.log('game ', game, 'game_score', game_score, 'before recommend_data');
                                 for (const [key, recommend_data] of recommend_entries) {
-
-                                    console.log('game ', game, 'game_score', game_score, 'in recommend_data');
                                     var recommend_values = Object.values(recommend_data);
                                     recommend_user = recommend_values[0];
                                     recommend_game = parseInt(recommend_values[1], 10);
